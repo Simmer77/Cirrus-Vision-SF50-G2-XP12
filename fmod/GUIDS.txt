@@ -1,0 +1,155 @@
+{57f51bdc-9d40-4bfb-bad3-44da17d3aa8f} bank:/Master Bank
+{cfe83b08-ec3b-07b9-3c9a-ce24e620ac17} bank:/Master Bank.strings
+{9f08114d-36ec-44cc-b8bf-b2babda09f9e} bus:/
+{7f7c05a4-e05a-4d44-94fe-d4691147a9b7} bus:/Master
+{e3492bec-f854-4fbb-b2bc-23586269032e} bus:/Master/Copilot
+{a5a85a81-afd5-4425-9dc2-6e50f7776e6a} bus:/Master/Exterior Processed
+{06db5351-0b2f-4648-b97a-a33b40a00e11} bus:/Master/Exterior Processed/Aircraft
+{881b0425-2d89-4f24-8e7b-382eebdda223} bus:/Master/Exterior Processed/Aircraft/Engines
+{b6c156f1-9861-405c-a622-92b2ab8010a7} bus:/Master/Exterior Processed/Environment
+{8dbbc9d7-a954-4ed0-b1f1-f8111b03cbd1} bus:/Master/Exterior Unprocessed
+{751f5066-4651-4afb-a410-4cb9db0894c9} bus:/Master/Interior
+{ab6d9dfc-1984-471f-a1d9-038cadaaf519} bus:/Master/Interior/Airflow
+{4d18eafc-63df-4ffb-bf05-23ad8c60e107} bus:/Master/Interior/Alerts
+{d8526059-b27c-4eae-9b14-a1ee1cb3dfa1} bus:/Master/Radios
+{77575f3b-b9cd-4bff-9056-637cff744a14} bus:/Master/UI
+{07498b30-1029-4c7d-8207-60f46c0862d4} event:/sf50/alerts/altitude_warn
+{ee1a94a3-f690-4669-9368-3d982b9f8194} event:/sf50/alerts/ap_disconnect
+{6ad97ff5-7bab-45bb-b711-785045e6a3d3} event:/sf50/alerts/cabin_alt
+{c67adab8-e652-4c19-b660-ce5ac1ab2115} event:/sf50/alerts/fire
+{485e642f-675f-4874-a5ae-26df3ed1e275} event:/sf50/alerts/gear_warn
+{b156fda0-67b3-4a6b-86aa-9dc05621dfbe} event:/sf50/alerts/inner_marker
+{e00c3e4d-eaad-43d0-86ae-d3ac1dc25461} event:/sf50/alerts/master_caution
+{8ca1434b-3c19-43c3-962b-664c072b7a8c} event:/sf50/alerts/middle_marker
+{fc0ef85b-4c93-4b52-933b-3a214fb7850a} event:/sf50/alerts/morse_1020_long
+{e868d570-8f24-40b0-8f7b-92f71defc893} event:/sf50/alerts/morse_1020_short
+{a395f969-4e30-4247-866a-07ccfd352b5d} event:/sf50/alerts/morse_1350_long
+{88170bb4-9605-46cd-892a-d43126b040d5} event:/sf50/alerts/morse_1350_short
+{ad200f7c-c6c6-4db4-85d8-3ada0e2b5db4} event:/sf50/alerts/outer_marker
+{33ed2cd5-11dc-4285-8cf9-20155d4c3879} event:/sf50/alerts/stall_warn
+{93398351-64c8-43be-82ea-cfaf65bcd4b5} event:/sf50/engines/engine
+{5f5eeebf-07ad-491a-8479-2bc71ded15a9} event:/sf50/engines/engine_fire
+{9d0eae16-3c5f-42ae-9ee3-af99572b7aeb} event:/sf50/engines/ignition
+{0d73c0fc-b538-48b8-acb2-3714487fbaf9} event:/sf50/engines/starter
+{bee2bf73-ecf7-42f4-b5ed-cb9d9bbbab33} event:/sf50/environment/air/airflow
+{9557c7e7-2b48-42bc-ac84-45ce7f95c5f6} event:/sf50/environment/air/gear_airflow
+{4877902c-631f-4614-b08f-ba773eed088a} event:/sf50/environment/air/oxygen_breathing
+{cf31b2ec-2f6e-40f6-b355-eb1ba12e89a2} event:/sf50/environment/air/oxygen_mask_don
+{db7447ae-3cac-46aa-bcda-86b32e510b15} event:/sf50/environment/air/turbulence
+{08dc2185-596e-48be-a1f3-1d311f626df7} event:/sf50/environment/ground/ambiance
+{62e49023-b416-4a8b-a0b1-5afc33321ba5} event:/sf50/environment/ground/belly_land
+{bdc01722-a613-4a14-8525-2998edecc6c7} event:/sf50/environment/ground/crash
+{e7ebdf28-4fe3-4696-9a65-b30708253409} event:/sf50/environment/ground/ground_roll
+{3e06b9a2-5201-4914-af15-4123df46a9a8} event:/sf50/environment/ground/rain_ext
+{cc6b7994-392c-4e2c-a637-c478f8052808} event:/sf50/environment/ground/rain_int
+{94674c83-8d7b-47bc-a730-afd0a3ad84cf} event:/sf50/environment/ground/tire_bump
+{1c5b985d-f99e-4615-9671-1ce54d226508} event:/sf50/environment/ground/tire_impact
+{1c89684b-f376-4b83-99db-c8fca2f83e52} event:/sf50/environment/ground/wheel_skid
+{3f1448eb-2dfb-4d3f-8c20-bcd8320e3b1c} event:/sf50/equipment/air_cond_fan
+{c1a574ca-882f-4f30-8e10-ba0cae976f2b} event:/sf50/equipment/avionics_fans
+{fabe4c0c-0471-4b10-8eef-224d434a7e76} event:/sf50/equipment/avionics_init
+{2cc74381-4acc-44d7-a356-a4aee5a7f29f} event:/sf50/equipment/door_close
+{c609101d-7b40-4640-a487-b5a89051acdb} event:/sf50/equipment/door_open
+{c758bd16-81d1-445c-a0f3-5e0620b0a28d} event:/sf50/equipment/flaps
+{88839095-d606-42ce-89ab-92e3728a2049} event:/sf50/equipment/fuel_pump
+{d7b5a6b4-df8d-4fd9-897c-31b5403cc0d2} event:/sf50/equipment/gear
+{9e55b6d8-b201-4ddf-bb47-78026d2e9bce} event:/sf50/g1000/hat_hold
+{dcdaf843-ca08-472d-b895-e75e8c38755c} event:/sf50/g1000/pushbutton_hold
+{e5f93dc0-a8d2-411f-b801-8ee879be5ed4} event:/sf50/g1000/rotary_single
+{252d4afe-31ee-4229-a481-af94fcca36e4} event:/sf50/switches/gear_lever_dn
+{ad3942f6-f128-4818-af8f-2cb8b81599ae} event:/sf50/switches/gear_lever_up
+{8db94053-0173-4cbe-9ddc-bc4b71b0f467} event:/sf50/switches/guard_close
+{bab84462-970b-4b10-b56c-6d98e987dd5d} event:/sf50/switches/guard_open
+{deddec23-bdd6-4046-94d1-0e294590b302} event:/sf50/switches/parachute_lever_pull
+{3c4d5cd1-391b-4bc0-8499-632452bb495e} event:/sf50/switches/parachute_lever_push
+{aa1df42c-01e6-459e-aeed-ab8aebe247b4} event:/sf50/switches/parking_lever_rel
+{b8792edc-c6ea-4768-8c80-826bdeee0398} event:/sf50/switches/parking_lever_set
+{150f39d6-41f8-4e98-af17-cfb1d2293da6} event:/sf50/switches/parking_lever_transit
+{3bbeb2b8-9f6b-4e55-afdd-5968db755d48} event:/sf50/switches/pb_ap_hold
+{144b73ad-ddeb-49ce-b31a-05e9f9f0b99c} event:/sf50/switches/pb_round_hold
+{e14285a7-a774-478f-bb43-e0bc45c3f009} event:/sf50/switches/pb_start_hold
+{c0653392-4d49-4e12-9661-f60afab381bb} event:/sf50/switches/rot_small_single
+{0055e924-8dc7-431e-896b-f5debe7ce0d2} event:/sf50/switches/sel_flaps
+{06fdc70d-c064-4f89-bf0f-d30dc66f6016} event:/sf50/switches/sel_starter
+{14d8ba70-16cd-46ae-a6b1-def09c8efed6} event:/sf50/switches/switch_metal
+{eff2afb2-99f8-43a9-926a-d67c1ae32823} event:/sf50/switches/toggle_black
+{c8d74908-f267-484a-8325-091c5e355a9b} event:/sf50/tcas/clear_of_conflict
+{3b141cf5-c62a-4c6d-aaaf-6e91ee44ab4b} event:/sf50/tcas/climb_climb
+{c2a7e604-a907-4158-a9ea-3c989a18e365} event:/sf50/tcas/climb_now
+{a0a88016-8c22-4d36-80fb-a70ef200a284} event:/sf50/tcas/climb_xing
+{da2ed22b-2349-40a8-8633-021abe3f8025} event:/sf50/tcas/descend_descend
+{80cf71fa-f652-447c-899f-084c00baa4d8} event:/sf50/tcas/descend_now
+{3745d81f-d3e2-4a59-8ceb-d89a1211daa0} event:/sf50/tcas/descend_xing
+{2f404f0a-2713-4ca0-8374-0f300457623b} event:/sf50/tcas/increase_climb
+{a578ac75-4619-42e9-bf1a-4260f3b3601a} event:/sf50/tcas/increase_descend
+{e013bdc1-7af5-4026-ab70-9b97ef71bd9b} event:/sf50/tcas/level_off
+{2647c0a9-7cf2-43e8-bdaa-03dc40f30821} event:/sf50/tcas/maintain_vs
+{96d63685-1f31-41ab-b52b-b0867345b503} event:/sf50/tcas/maintain_vs_xing
+{456e0bce-282f-43cd-a33f-eb0f1cded144} event:/sf50/tcas/monitor_vs
+{041a3b03-7f83-4926-9726-a3521e8ca016} event:/sf50/tcas/tcas_test_fail
+{a83956ee-eaad-4cf9-a864-1340b67cd476} event:/sf50/tcas/tcas_test_pass
+{f4ee9cab-556f-49cb-b077-ff2354437a02} event:/sf50/tcas/traffic_traffic
+{335b917a-5b78-4e56-bf62-b9260f4cf55b} parameter:/ADSR
+{668dc69b-4f16-40a9-9467-46ddcf99e899} parameter:/Distance
+{1be3803d-001d-400d-84bb-9c608acab2d0} parameter:/Distance 2
+{13d87496-2009-4e41-9ebc-350bd30ce9ef} parameter:/Distance 3
+{61d8fea8-c63b-409d-a6ae-0fd9b2eccbc1} parameter:/Distance 4
+{60abbceb-b253-4f43-8dc1-bc92add22372} parameter:/Distance 5
+{67a8e2de-a8a0-49ab-8322-9acd1c314a89} parameter:/Event Cone Angle
+{7855c254-c4b0-4bff-bfbf-af896fa88615} parameter:/sf50/engines/engine/sim.cockpit2.gauges.indicators.altitude_ft_pilot
+{be08675b-9704-4479-9a3b-a9f85b50e411} parameter:/sf50/engines/engine/sim.cockpit2.gauges.indicators.radio_altimeter_height_ft_pilot
+{f8f1222c-5e27-4e94-a3a4-4a9a40e14b5c} parameter:/sf50/engines/engine/sim.flightmodel2.engines.N1_percent[#]
+{82e52470-9943-4cec-8069-46435c265fe8} parameter:/sf50/engines/engine/sim.flightmodel2.engines.engine_is_burning_fuel[#]
+{b689d702-4c7e-4a28-84b3-c65a5416bfb8} parameter:/sf50/engines/engine/sim.flightmodel2.engines.jetwash_mtr_sec[#]
+{8b7627c2-70b0-4dcc-a5ad-8bcfe593e1ab} parameter:/sf50/engines/engine/sim.operation.sound.inside_any
+{40686801-33f2-4fdb-812b-70a6ca71b927} parameter:/sf50/engines/engine_fire/Distance
+{7441cb8d-032c-487d-a360-57700725da0d} parameter:/sf50/engines/ignition/sim.flightmodel2.engines.N2_percent[#]
+{01093123-c785-498a-9a53-f13e93994d72} parameter:/sf50/engines/starter/ADSR
+{c31e8855-1940-44be-a2cc-32c1b794ac8a} parameter:/sf50/engines/starter/sim.flightmodel2.engines.N2_percent[#]
+{39ea83b5-edd3-49e5-bea5-62527bfdb90b} parameter:/sf50/engines/starter/sim.flightmodel2.engines.engine_is_burning_fuel[#]
+{3cab56a4-6a1d-4455-bae9-69dc72c889e4} parameter:/sf50/environment/air/airflow/sim.flightmodel.position.true_airspeed
+{4ecb693d-fc95-416e-88e7-67188098ce72} parameter:/sf50/environment/air/gear_airflow/sim.flightmodel.position.indicated_airspeed2
+{3eb5f33a-d027-432f-8e9c-b59979db1be1} parameter:/sf50/environment/air/gear_airflow/sim.flightmodel2.gear.deploy_ratio[0]
+{baa8997e-d0e9-476a-8ed4-7683f8134fe6} parameter:/sf50/environment/air/turbulence/Parameter 1
+{27f21892-f0dc-4956-ba73-292db9767675} parameter:/sf50/environment/ground/belly_land/Parameter 1
+{7f5aab8d-6dc6-42c4-afb1-5dab22504655} parameter:/sf50/environment/ground/belly_land/sim.flightmodel.position.groundspeed
+{5869bd1d-73f6-45db-895a-c3741912af28} parameter:/sf50/environment/ground/ground_roll/ADSR
+{18c3330d-c4b7-4a98-9150-001e17954603} parameter:/sf50/environment/ground/ground_roll/sim.flightmodel2.gear.on_ground[#]
+{a1505225-8904-4ae8-a991-6e4c2b8d5831} parameter:/sf50/environment/ground/ground_roll/sim.flightmodel2.gear.tire_rotation_speed_rad_sec[#]
+{6eff0cf4-ae47-4d7e-896d-570559336ff7} parameter:/sf50/environment/ground/tire_impact/Distance
+{25fc4f68-408d-4005-ae3e-3915a1f950f8} parameter:/sf50/environment/ground/wheel_skid/Parameter 1
+{13612c0c-4401-4d1c-ae88-6d3f178c7bad} parameter:/sf50/environment/ground/wheel_skid/sim.flightmodel2.gear.tire_skid_ratio[#]
+{4088cecd-261a-42e5-be13-9685a9a71ae4} parameter:/sf50/equipment/air_cond_fan/ADSR
+{865adf95-4ec0-4b43-8d95-e64e68fbcce7} parameter:/sf50/equipment/air_cond_fan/sim.cockpit2.electrical.bus_load_amps[0]
+{fc5e9593-c217-41b9-9749-11f65dbb13a1} parameter:/sf50/equipment/air_cond_fan/sim.cockpit2.pressurization.indicators.fan_speed
+{83a5284f-d8c7-4269-a32a-323b3e2c0d70} parameter:/sf50/equipment/avionics_fans/ADSR
+{0ee27ca5-3d87-47d7-9243-f02186b14f4a} parameter:/sf50/equipment/avionics_fans/sim.cockpit2.electrical.bus_load_amps[0]
+{50840013-c561-48ac-a97a-5f077439aece} parameter:/sf50/equipment/avionics_init/Distance
+{20f0df53-5196-4bf2-8c7d-7038da1fc4fb} parameter:/sf50/equipment/flaps/ADSR
+{4942c4a4-b1cc-4bd7-b910-303858af8215} parameter:/sf50/equipment/flaps/Distance
+{8e6199eb-5ff3-4a83-8d62-d5050c37717f} parameter:/sf50/equipment/flaps/sim.flightmodel2.wing.flap1_deg[0]
+{56c87217-018b-408b-b5aa-91394bd20378} parameter:/sf50/equipment/fuel_pump/ADSR
+{cfd12b95-bcb7-43e9-b1d3-782c2416639b} parameter:/sf50/equipment/fuel_pump/Distance
+{ced6e982-df45-499c-8fd6-8811516d70b0} parameter:/sf50/equipment/fuel_pump/sim.cockpit2.electrical.bus_load_amps[0]
+{9f7637d1-1342-44ed-bb28-562012812891} parameter:/sf50/equipment/fuel_pump/sim.flightmodel2.engines.engine_is_burning_fuel[#]
+{b3ec95c8-5579-4c1a-afd3-31a330bb760a} parameter:/sf50/equipment/fuel_pump/sim.time.is_in_replay
+{4858d9d8-1e0c-434b-8850-bab9190e6453} parameter:/sf50/equipment/gear/sim.flightmodel2.gear.deploy_ratio[#]
+{83376ae1-f871-4438-849b-c3103a2b79a8} parameter:/sim.cockpit2.gauges.indicators.altitude_ft_pilot
+{0087c64c-be00-4f96-ac83-baec19349f56} parameter:/sim.cockpit2.oxygen.indicators.pilot_felt_altitude_ft
+{ad0fd9f7-ba65-47c1-a9bc-4ff9037a78fc} parameter:/sim.cockpit2.radios.indicators.inner_marker_signal_ratio
+{6ae568d6-a40c-4c3e-8f96-37e584dbd69d} parameter:/sim.cockpit2.radios.indicators.middle_marker_signal_ratio
+{214877ce-e757-4675-a01f-d653238afcb9} parameter:/sim.cockpit2.radios.indicators.outer_marker_signal_ratio
+{7a7b2e79-69ae-43f1-8e21-e5b024332266} parameter:/sim.flightmodel.position.indicated_airspeed
+{4eed8982-930e-4a5d-9d50-a00dcb224a90} parameter:/sim.flightmodel2.engines.N2_percent[#]
+{bf2723c5-5453-46bc-a695-262ea3d95df4} parameter:/sim.flightmodel2.gear.on_noisy[#]
+{161e3786-db25-410c-9264-ba4eba05ab7b} parameter:/sim.flightmodel2.misc.custom_slider_ratio[#]
+{cdec92e0-a4bd-48a8-86c2-dcc435f91777} parameter:/sim.flightmodel2.misc.custom_slider_ratio[0]
+{1ca1cbac-d4fa-4dc6-81b6-e7e757eab556} parameter:/sim.operation.sound.inside_ratio[#]
+{7ce1f852-4051-4e4d-8875-f25a55c2c14a} parameter:/sim.time.total_flight_time_sec
+{736c6993-102d-43e0-b4c9-a4cce6ecc9e5} parameter:/sim.weather.precipitation_on_aircraft_ratio
+{ef8e96d3-af2e-43a0-a9fe-45f7336261c7} parameter:/sim.weather.view.hail_ratio
+{91a01e38-1e22-46e1-8563-c98374183e66} parameter:/sim.weather.view.snow_ratio
+{00bdcdce-27d7-4922-b681-e0eff073fb18} snapshot:/door_open
+{c0d07573-361a-4b72-bdbb-560d0aa76e2c} snapshot:/ducker
+{d216aea0-77c9-43d3-825f-b9d8a02cde4d} snapshot:/hypoxia
+{25911fb8-2029-45a0-8023-5c186ac37fd2} snapshot:/in_cockpit

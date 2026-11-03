@@ -1,0 +1,9 @@
+# Ignored files
+*.bak
+*.tmp
+*.old
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

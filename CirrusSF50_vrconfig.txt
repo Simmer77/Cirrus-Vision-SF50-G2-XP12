@@ -1,0 +1,61 @@
+A
+1100
+VRCONFIG
+
+################################
+#TELEPORT HOTSPOTS
+################################
+
+BEGIN_TELEPORT_HOTSPOT SITTING Pilot's Seat
+	AABB -0.8 -0.5 -1.9952 0.0 1.0 -0.8952
+	PRESET_XYZ -0.38 0.60 -1.40
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_TELEPORT_HOTSPOT SITTING CoPilot's Seat
+	AABB  0.0 -0.5 -1.9952 0.8 1.0 -0.8952
+	PRESET_XYZ 0.33 0.60 -1.40
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_TELEPORT_HOTSPOT SITTING Rear-Middle Seat
+	AABB  -0.3 -0.5 -0.6952 0.3 1.0 2.8048
+	PRESET_XYZ -0.05 0.65 0.50
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_MANIP drag_xy sim/cockpit2/controls/yoke_roll_ratio sim/cockpit2/controls/yoke_pitch_ratio
+	#JOYSTICK_MANIP <ptch min> <ptch max> <roll min> <roll max>
+	JOYSTICK_MANIP -30.0 30.0 -70.0 70.0
+END_MANIP
+
+BEGIN_MANIP command_knob sim/instruments/instrument_bright_up sim/instruments/instrument_bright_down
+	DEG_PER_ACTION 1
+END_MANIP
+
+BEGIN_MANIP command_knob sim/autopilot/altitude_up sim/autopilot/altitude_down
+	DEG_PER_ACTION 5
+END_MANIP
+
+BEGIN_MANIP command_knob sim/flight_controls/flaps_down sim/flight_controls/flaps_up
+	DEG_PER_ACTION 30
+END_MANIP
+
+BEGIN_MANIP command_knob laminar/SF50/fuel_selector_up laminar/SF50/fuel_selector_dwn
+	DEG_PER_ACTION 30
+END_MANIP
+
+BEGIN_MANIP command_knob laminar/SF50/ignition_up laminar/SF50/ignition_down
+	DEG_PER_ACTION 50
+END_MANIP
+
+BEGIN_MANIP command_knob sim/pressurization/fan_up sim/pressurization/fan_down
+	DEG_PER_ACTION 30
+END_MANIP
+
