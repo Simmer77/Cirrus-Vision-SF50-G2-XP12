@@ -1,7 +1,7 @@
 # Cirrus Vision SF50 G2 — Native X-Plane 12 Community Overhaul
 
 [![X-Plane 12 Compatible](https://img.shields.io/badge/X--Plane-12.00%2B-blue.svg)](https://www.x-plane.com/)
-[![Version](https://img.shields.io/badge/version-v2.0.0-green.svg)](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases)
+[![Version](https://img.shields.io/badge/version-v1.0.0-green.svg)](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases)
 [![Aircraft](https://img.shields.io/badge/Type-Very%20Light%20Jet%20(VLJ)-orange.svg)]()
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-lightgrey.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -11,7 +11,14 @@ Built upon the default Laminar Research Cirrus SF50 base airframe, this package 
 
 ---
 
-## ✈️ Key Features in v2.0.0
+## 🌐 SimBrief Airframe Profile
+
+A dedicated, pre-calibrated official SimBrief airframe profile matching the native XP12 Cirrus Vision Jet SF50 G2 (certified FL310 ceiling, Williams FJ33-5A engine performance & fuel flow, MTOW 6,000 lbs, accurate weights and PBN avionics) is available for 1-click import into your fleet:
+* 👉 **[Cirrus Vision Jet SF50 G2 — Official SimBrief Airframe](https://dispatch.simbrief.com/airframes/share/eyJiYXNldHlwZSI6IlNGNTAiLCJpY2FvIjoiU0Y1MCIsInJlZyI6IkFMUDUxNiIsImZpbiI6IiIsInNlbGNhbCI6IiIsImhleGNvZGUiOiIiLCJwbGFuZm9ybWF0IjoiIiwiZmxpZ2h0cnVsZXMiOiIiLCJmbGlnaHR0eXBlIjoiZyIsInBsYW51bml0cyI6IjAiLCJhbHRuc2Fkdl9yYWRpdXMiOiIyODgiLCJhbHRuc2Fkdl91bml0c19yd3kiOiJmdCIsImFsdG5zYWR2X3J3eSI6IjM1MDAiLCJuYW1lIjoiVmlzaW9uIEpldCBTRjUwIEcyIiwiZW5naW5lcyI6IkZKMzMtNUEiLCJjb21tZW50cyI6IkNJUlJVUyBTRjUwIEcyIC0gWFAxMiBOQVRJVkUgT1ZFUkhBVUwiLCJwZXIiOiJCIiwiY2F0IjoiTCIsImV0b3BzdGhyZXNob2xkIjoiNjAiLCJldG9wc3JhbmdlIjoiIiwiZXF1aXAiOiJCREdSU1dZIiwidHJhbnNwb25kZXIiOiJMQjJVMiIsInBibiI6IkIyQzJEMk8yUzIiLCJleHRyYXJtayI6IkRBVC9WIFJNSy9TRjUwIEcyIFhQMTIiLCJtYW51YWxybWsiOiJDSVJSVVMgVklTSU9OIEpFVCBTRjUwIEcyIChYUDEyIE9WRVJIQVVMKS4gTVRPVyA2MDAwIExCUyAvIDI3MjIgS0csIENFSUxJTkcgRkwzMTAsIFdJTExJQU1TIEZKMzMtNUEgRkFERUMuIENPTVBMSUFOVCBXSVRIIFJWU00gQU5EIFBCTiBSTkFWL1JOUC4iLCJ3Z3R1bml0cyI6IktHUyIsIm1heHBheCI6IjUiLCJwYXh3Z3QiOiI4MiIsImJhZ3dndCI6IjEwIiwib2V3IjoiMTY5MiIsIm16ZnciOiIyMjIzIiwibXRvdyI6IjI3MjIiLCJtbHciOiIyNTE3IiwibWF4ZnVlbCI6IjkwNyIsIm1heGNhcmdvIjoiMTM2IiwiY2FyZ29tb2RlIjoiIiwiY29udHBjdCI6IiIsInJlc3ZydWxlIjoiIiwidGF4aWZ1ZWwiOiIyOSIsIm1pbmZvYiI6IiIsIm1pbmZvYl91bml0cyI6IndndCIsIm1pbmZvZCI6IiIsIm1pbmZvZF91bml0cyI6IndndCIsIm1lbGZ1ZWwiOiIiLCJtZWxmdWVsX3VuaXRzIjoid2d0IiwiYXRjZnVlbCI6IiIsImF0Y2Z1ZWxfdW5pdHMiOiJ3Z3QiLCJ3eHhmdWVsIjoiIiwid3h4ZnVlbF91bml0cyI6IndndCIsImFkZGVkZnVlbF9sYWJlbCI6ImV4dHJhIiwiYWRkZWRmdWVsIjoiIiwiYWRkZWRmdWVsX3VuaXRzIjoid2d0IiwidGFua2VyaW5nIjoiIiwidGFua2VyaW5nX3VuaXRzIjoid2d0IiwiZnVlbGZhY3RvciI6IlAwMCIsImNydWlzZW9mZnNldCI6IlAwMDAwIiwiY2VpbGluZyI6IjMxMDAwIiwiZGVmYXVsdGNydWlzZSI6Ik5PUk0iLCJkZWZhdWx0Y2kiOiIiLCJkZWZhdWx0Y2xpbWIiOiJOT1JNIiwiZGVmYXVsdGRlc2NlbnQiOiJOT1JNIiwidGhydXN0X3VuaXRzIjoibGJmIiwidGhydXN0IjoiMjA1MCIsImZsYXRyYXRpbmciOiIifQ--)**
+
+---
+
+## ✈️ Key Features in v1.0.0
 
 ### 1. Digital Autothrottle, FADEC & Autopilot Overhaul
 * **Dedicated Autothrottle State Machine (`sf50_autopilot.lua`)**: Fully modeled digital autothrottle with native support for `Auto T`, `TOGA`, `MCT`, `KTS`, `Mach`, `FMS`, `M CRS`, and `E CRS`.
@@ -62,7 +69,7 @@ Detailed pilot operating handbooks are included directly within the aircraft fol
 
 ## 📥 Installation
 
-1. Go to the [**Releases**](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases) page and download `Cirrus_Vision_SF50_G2_XP12_v2.0.0.zip`.
+1. Go to the [**Releases**](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases) page and download `Cirrus_Vision_SF50_G2_XP12_v1.0.0.zip`.
 2. Extract the archive into your X-Plane 12 aircraft directory:
    ```text
    X-Plane 12/Aircraft/Cirrus Vision SF50 G2/
