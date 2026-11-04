@@ -77,10 +77,10 @@ local prev_wing_ice       = 0
 
 -- Linear FADEC Thrust Lever Angle (TLA) constants matching CirrusSF50.acf _fadec_tla table:
 -- TLA 1.00 -> 1.00 (100% Takeoff Thrust / TOGA)
--- TLA 0.90 -> 0.95 (95% Max Continuous Thrust / MCT)
--- TLA 0.00..0.90 -> 0.00..0.95 (100% Linear continuous modulation range with zero deadband)
+-- TLA 0.98 -> 0.98 (98% Max Continuous Thrust / MCT high-altitude cruise ceiling)
+-- TLA 0.00..0.98 -> 0.00..0.98 (100% Linear continuous modulation range with zero deadband)
 local TLA_TOGA_MAX = 1.000
-local TLA_MCT_DET  = 0.900
+local TLA_MCT_DET  = 0.980
 
 
 --*************************************************************************************--

@@ -4731,7 +4731,7 @@ P _body/21/_locked/9,9 0
 P _body/21/_locked/i_count 20
 P _body/21/_locked/j_count 18
 P _body/21/_part_area_rule 1.000000000
-P _body/21/_part_cd 0.100000001
+P _body/21/_part_cd 0.045000000
 P _body/21/_part_phi 0.000000000
 P _body/21/_part_psi 0.000000000
 P _body/21/_part_rad 1.549999952
@@ -4767,7 +4767,7 @@ P _engn/0/_part_x 0.000000000
 P _engn/0/_part_y 1.899999857
 P _engn/0/_part_z 23.000000000
 P _engn/0/_power_max_limit 0.000000000
-P _engn/0/_thrust_max_limit 1950.000000000
+P _engn/0/_thrust_max_limit 2050.000000000
 P _engn/0/_type JET_2SPOOL
 P _engn/count 16
 P _gear/0/_axiE 0.000000000
@@ -5864,9 +5864,9 @@ P _strut_t1 0.128906250
 P _strut_t2 0.252929688
 P _wing/0/_Croot 7.199999809
 P _wing/0/_Ctip 3.900000095
-P _wing/0/_afl_file_1 NACA 65(216)-415 (lam flow).afl
-P _wing/0/_afl_file_2 NACA 65(216)-415 (lam flow).afl
-P _wing/0/_afl_file_3 NACA 65(216)-415 (lam flow).afl
+P _wing/0/_afl_file_1 NACA 65(216)-415-2 (lam flow).afl
+P _wing/0/_afl_file_2 NACA 65(216)-415-2 (lam flow).afl
+P _wing/0/_afl_file_3 NACA 65(216)-415-2 (lam flow).afl
 P _wing/0/_ailn1/0 0
 P _wing/0/_ailn1/1 0
 P _wing/0/_ailn1/2 0
@@ -7667,9 +7667,9 @@ P _wing/0/_yawbr/count 10
 P _wing/0/_yawbr_hyd0123 0
 P _wing/1/_Croot 7.199999809
 P _wing/1/_Ctip 3.900000095
-P _wing/1/_afl_file_1 NACA 65(216)-415 (lam flow).afl
-P _wing/1/_afl_file_2 NACA 65(216)-415 (lam flow).afl
-P _wing/1/_afl_file_3 NACA 65(216)-415 (lam flow).afl
+P _wing/1/_afl_file_1 NACA 65(216)-415-2 (lam flow).afl
+P _wing/1/_afl_file_2 NACA 65(216)-415-2 (lam flow).afl
+P _wing/1/_afl_file_3 NACA 65(216)-415-2 (lam flow).afl
 P _wing/1/_ailn1/0 0
 P _wing/1/_ailn1/1 0
 P _wing/1/_ailn1/2 0
@@ -17725,7 +17725,7 @@ P acf/_bus_gen_is_on/6 0
 P acf/_bus_gen_is_on/7 0
 P acf/_bus_gen_is_on/count 8
 P acf/_buses_always_tied 1
-P acf/_bypass_ratio 3.000000000
+P acf/_bypass_ratio 1.200000000
 P acf/_callsign Vision
 P acf/_camera_fov_zoom 60.000000000
 P acf/_camera_offset_phi 0.000000000
@@ -18914,11 +18914,11 @@ P acf/_fadec_prevents_overboost 0
 P acf/_fadec_prevents_temp_EGT 1
 P acf/_fadec_prevents_temp_ITT 0
 P acf/_fadec_target/0 1.000000000
-P acf/_fadec_target/1 0.949999988
+P acf/_fadec_target/1 0.980000000
 P acf/_fadec_target/2 0.000000000
 P acf/_fadec_target/count 3
 P acf/_fadec_tla/0 0.980000019
-P acf/_fadec_tla/1 0.900000000
+P acf/_fadec_tla/1 0.950000000
 P acf/_fadec_tla/2 0.000000000
 P acf/_fadec_tla/count 3
 P acf/_fan_rpm_for_n1_100 2.25E4
@@ -19149,9 +19149,9 @@ P acf/_green_hi_EPR 2.000000000
 P acf/_green_hi_FF 771.000000000
 P acf/_green_hi_ITT 836.000000000
 P acf/_green_hi_MP 29.920000076
-P acf/_green_hi_N1 90.000000000
+P acf/_green_hi_N1 100.000000000
 P acf/_green_hi_N1_apu 0.000000000
-P acf/_green_hi_N2 100.000000000
+P acf/_green_hi_N2 102.000000000
 P acf/_green_hi_TRQ 100.000000000
 P acf/_green_hi_bat_amp 100.000000000
 P acf/_green_hi_bat_temp 0.000000000
@@ -19335,7 +19335,7 @@ P acf/_idle_rat/0 0.479999989
 P acf/_idle_rat/1 0.479999989
 P acf/_idle_rat/count 2
 P acf/_incidence_with_flaps 0
-P acf/_inlet_compression_efficiency 0.920000000
+P acf/_inlet_compression_efficiency 1.000000000
 P acf/_inlet_max_KEAS 340.000000000
 P acf/_inlet_max_temp_C 80.000000000
 P acf/_integrated_approach_navigation 0
@@ -19429,7 +19429,7 @@ P acf/_max_gen_amp_per_gen/8 0.000000000
 P acf/_max_gen_amp_per_gen/9 0.000000000
 P acf/_max_gen_amp_per_gen/count 16
 P acf/_max_inverter 1.000000000
-P acf/_max_mach_eff 0.880000000
+P acf/_max_mach_eff 0.900000000
 P acf/_max_oilT 149.000000000
 P acf/_max_press_diff 7.500000000
 P acf/_max_stator 1.000000000
@@ -19566,7 +19566,7 @@ P acf/_red_hi_EPR 2.000000000
 P acf/_red_hi_FF 1029.000000000
 P acf/_red_hi_ITT 877.000000000
 P acf/_red_hi_MP 29.920000076
-P acf/_red_hi_N1 100.000000000
+P acf/_red_hi_N1 103.500000000
 P acf/_red_hi_N1_apu 0.000000000
 P acf/_red_hi_N2 100.000000000
 P acf/_red_hi_TRQ 110.000000000
@@ -20004,7 +20004,7 @@ P acf/_throt_time_jet 1.000000000
 P acf/_throt_time_prop 5.000000000
 P acf/_throttle_drives_EPR 1
 P acf/_throttle_drives_N2 0
-P acf/_thrust_max_limit 1950.000000000
+P acf/_thrust_max_limit 2050.000000000
 P acf/_thrust_rev_dep_time 0.100000001
 P acf/_tip_AOA_des 0.000000000
 P acf/_tip_mach_des_100 0.000000000
