@@ -61,9 +61,18 @@ IN_REPLAY: evaluates to 0 if replay is off, 1 if replay mode is on
 --*************************************************************************************--
 simDR_startup_running = find_dataref('sim/operation/prefs/startup_running')
 simDR_battery_on = find_dataref('sim/cockpit2/electrical/battery_on')
+simDR_battery_amps = find_dataref('sim/cockpit2/electrical/battery_amps')
 simDR_generator_on = find_dataref('sim/cockpit/electrical/generator_on')
+simDR_bus_volts = find_dataref('sim/cockpit2/electrical/bus_volts')
+simDR_bus_load_amps = find_dataref('sim/cockpit2/electrical/bus_load_amps')
+
 simDR_gpu_on = find_dataref('sim/cockpit2/electrical/GPU_generator_on')
+simDR_gpu_on_legacy = find_dataref('sim/cockpit/electrical/gpu_on')
 simDR_gpu_volts = find_dataref('sim/cockpit2/electrical/GPU_generator_volts')
+simDR_gpu_amps = find_dataref('sim/cockpit/electrical/gpu_amps')
+simDR_gpu_gen_amps = find_dataref('sim/cockpit2/electrical/GPU_generator_amps')
+simDR_override_gpu_volts = find_dataref('sim/operation/override/override_GPU_volts')
+
 simDR_groundspeed = find_dataref('sim/flightmodel/position/groundspeed')
 simDR_on_ground = find_dataref('sim/flightmodel2/gear/on_ground[0]')
 
@@ -74,6 +83,7 @@ simDR_on_ground = find_dataref('sim/flightmodel2/gear/on_ground[0]')
 --*************************************************************************************--
 simCMD_gpu_on = find_command('sim/electrical/GPU_on')
 simCMD_gpu_off = find_command('sim/electrical/GPU_off')
+simCMD_gpu_request = find_command('sim/ground_ops/toggle_gpu_request')
 
 
 
@@ -263,19 +273,76 @@ function after_physics()
 		avionics_power_on = 1
 	end
 
-	-- GPU management and safety auto-disconnect
+	-- GPU management, bus power supply, and safety auto-disconnect
 	if simDR_gpu_on ~= nil and simDR_gpu_on == 1 then
+		-- Auto-disconnect if taxiing (groundspeed > 1.5 m/s ~ 3 kts) or airborne
 		if (simDR_groundspeed ~= nil and simDR_groundspeed > 1.5) or (simDR_on_ground ~= nil and simDR_on_ground == 0) then
 			simDR_gpu_on = 0
+			if simDR_gpu_on_legacy ~= nil then simDR_gpu_on_legacy = 0 end
+			if simDR_override_gpu_volts ~= nil then simDR_override_gpu_volts = 0 end
+			if simDR_gpu_volts ~= nil then simDR_gpu_volts = 0.0 end
+			if simDR_gpu_amps ~= nil then simDR_gpu_amps[0] = 0.0 end
+			if simDR_gpu_gen_amps ~= nil then simDR_gpu_gen_amps = 0.0 end
 			if simCMD_gpu_off ~= nil then
 				simCMD_gpu_off:once()
 			end
 		else
-			if simDR_gpu_volts ~= nil and simDR_gpu_volts < 20.0 then
-				if simCMD_gpu_on ~= nil then
-					simCMD_gpu_on:once()
+			-- Active GPU Power Supply: enable voltage override & connect 28V
+			if simDR_gpu_on_legacy ~= nil and simDR_gpu_on_legacy == 0 then
+				simDR_gpu_on_legacy = 1
+			end
+			if simDR_override_gpu_volts ~= nil and simDR_override_gpu_volts == 0 then
+				simDR_override_gpu_volts = 1
+			end
+			if simDR_gpu_volts ~= nil then
+				simDR_gpu_volts = 28.0
+			end
+			if simCMD_gpu_on ~= nil then
+				simCMD_gpu_on:once()
+			end
+
+			-- Calculate and deliver current to the aircraft electrical buses
+			local current_load = 28.0
+			if simDR_bus_load_amps ~= nil then
+				current_load = math.max(28.0, (simDR_bus_load_amps[0] or 14.0) + (simDR_bus_load_amps[1] or 14.0))
+			end
+
+			if simDR_gpu_amps ~= nil then
+				simDR_gpu_amps[0] = current_load
+			end
+			if simDR_gpu_gen_amps ~= nil then
+				simDR_gpu_gen_amps = current_load
+			end
+
+			-- When external 28V power is active and engine generators are off,
+			-- external power supplies the buses directly so batteries stop discharging.
+			local gen_running = false
+			if simDR_generator_on ~= nil then
+				if simDR_generator_on[0] == 1 or simDR_generator_on[1] == 1 then
+					gen_running = true
 				end
 			end
+
+			if not gen_running then
+				if simDR_bus_volts ~= nil then
+					simDR_bus_volts[0] = 28.0
+					simDR_bus_volts[1] = 28.0
+				end
+				if simDR_battery_amps ~= nil then
+					-- Float trickle charge (+1A) instead of discharging (-14A)
+					simDR_battery_amps[0] = 1.0
+					simDR_battery_amps[1] = 1.0
+				end
+			end
+		end
+	else
+		-- When GPU is turned OFF
+		if simDR_override_gpu_volts ~= nil and simDR_override_gpu_volts == 1 then
+			simDR_override_gpu_volts = 0
+			if simDR_gpu_on_legacy ~= nil then simDR_gpu_on_legacy = 0 end
+			if simDR_gpu_volts ~= nil then simDR_gpu_volts = 0.0 end
+			if simDR_gpu_amps ~= nil then simDR_gpu_amps[0] = 0.0 end
+			if simDR_gpu_gen_amps ~= nil then simDR_gpu_gen_amps = 0.0 end
 		end
 	end
 

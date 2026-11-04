@@ -19191,9 +19191,9 @@ P acf/_green_lo_stator 0.000000000
 P acf/_green_lo_vac 3.200000048
 P acf/_green_lo_xmsn_P 0.000000000
 P acf/_green_lo_xmsn_T 0.000000000
-P acf/_ground_pwr/0 0.000000000
-P acf/_ground_pwr/1 0.000000000
-P acf/_ground_pwr/2 0.000000000
+P acf/_ground_pwr/0 -3.000000000
+P acf/_ground_pwr/1 -0.500000000
+P acf/_ground_pwr/2 5.000000000
 P acf/_ground_pwr/count 3
 P acf/_gyro_spooldown_time 60.000000000
 P acf/_gyro_spoolup_time 5.000000000
@@ -19229,7 +19229,7 @@ P acf/_has_full_bleed_air 0
 P acf/_has_get_tow 0
 P acf/_has_get_tow_new 0
 P acf/_has_give_tow 0
-P acf/_has_ground_pwr 0
+P acf/_has_ground_pwr 1
 P acf/_has_hsi 0
 P acf/_has_pre_rotate 0
 P acf/_has_push_back 1
@@ -22270,7 +22270,7 @@ GROUP GTC-EFIS[1]
       ROUNDING ROUND_ROUND
 
     gen_rotary gen_rot_BACK
-      POS 405.000000 136.000000
+      POS 460.000000 126.000000
       IMAGE GTC/icon_back
       DATAREF sim/cockpit2/EFIS/EFIS_page[1]
       LIGHT_MODE GLASS_AUTO
@@ -22290,7 +22290,7 @@ GROUP GTC-EFIS[1]
       CLICK_DY 0
 
     gen_rotary gen_rot_HOME
-      POS 405.000000 80.000000
+      POS 460.000000 80.000000
       IMAGE GTC/icon_home
       DATAREF sim/cockpit2/EFIS/EFIS_page[1]
       LIGHT_MODE GLASS_AUTO
