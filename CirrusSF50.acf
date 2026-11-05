@@ -19308,7 +19308,7 @@ P acf/_hyd_max_p_eng 0.000000000
 P acf/_hyd_max_p_rot 0.000000000
 P acf/_hyd_nw_steer 0
 P acf/_hyd_park_brake_toe 0
-P acf/_hyd_park_brake_trap 2
+P acf/_hyd_park_brake_trap 0
 P acf/_hyd_prop_brake 0
 P acf/_hyd_prop_pump_0123/0 0
 P acf/_hyd_prop_pump_0123/1 0

@@ -28,10 +28,25 @@ simDR_startup_running  = find_dataref("sim/operation/prefs/startup_running")
 -- G2 Systems & Nosewheel Steering panel datarefs
 nosewheel_steer_on       = find_dataref("sim/cockpit2/controls/nosewheel_steer_on")
 parking_brake_ratio      = find_dataref("sim/cockpit2/controls/parking_brake_ratio")
+simDR_parkbrake          = find_dataref("sim/flightmodel/controls/parkbrake")
+simDR_park_brake_valve   = find_dataref("sim/cockpit2/controls/park_brake_valve")
 simDR_ice_surfce_heat_on = find_dataref("sim/cockpit2/ice/ice_surfce_heat_on")
 simDR_ice_surfce_left    = find_dataref("sim/cockpit2/ice/ice_surfce_heat_left_on")
 simDR_ice_surfce_right   = find_dataref("sim/cockpit2/ice/ice_surfce_heat_right_on")
 simDR_ice_tail           = find_dataref("sim/cockpit2/ice/ice_tail_heat_on")
+
+-- Commands for reliable Parking Brake actuation
+simCMD_brakes_toggle_max  = find_command("sim/flight_controls/brakes_toggle_max")
+simCMD_park_brake_set     = find_command("sim/flight_controls/park_brake_set")
+simCMD_park_brake_release = find_command("sim/flight_controls/park_brake_release")
+simCMD_valve_close        = find_command("sim/flight_controls/park_brake_valve_close")
+simCMD_valve_open         = find_command("sim/flight_controls/park_brake_valve_open")
+
+local function safe_cmd_once(cmd)
+	if cmd ~= nil and cmd.cmd ~= nil then
+		pcall(function() cmd:once() end)
+	end
+end
 
 -- Native X-Plane custom slider switches (indices 10..18) bound to the G2 touchscreen buttons
 btn_at_pwr     = find_dataref("sim/cockpit2/switches/custom_slider_on[10]") -- Auto T ON
@@ -483,12 +498,53 @@ local function update_g2_autothrottle_panel()
 	-- 7. G2 Systems Panel: Parking Brake button (custom_slider_on[18])
 	if clicked_pbrake then
 		if btn_park_brake == 1 then
+			-- User tapped "Brakes ON": engage brakes firmly
+			safe_cmd_once(simCMD_park_brake_set)
+			safe_cmd_once(simCMD_valve_close)
+			if simDR_parkbrake < 0.5 then
+				safe_cmd_once(simCMD_brakes_toggle_max)
+			end
+			simDR_parkbrake = 1.0
 			parking_brake_ratio = 1.0
+			simDR_park_brake_valve = 1
 		else
+			-- User tapped "Brakes OFF": release all brakes
+			safe_cmd_once(simCMD_park_brake_release)
+			safe_cmd_once(simCMD_valve_open)
+			if simDR_parkbrake > 0.5 then
+				safe_cmd_once(simCMD_brakes_toggle_max)
+			end
+			simDR_parkbrake = 0.0
 			parking_brake_ratio = 0.0
+			simDR_park_brake_valve = 0
+		end
+	else
+		-- Bidirectional synchronization with physical inputs (keyboard 'V', 3D pedestal lever, joystick pedals)
+		local is_braking = (simDR_parkbrake > 0.5) or (parking_brake_ratio > 0.5) or (simDR_park_brake_valve == 1)
+		if is_braking then
+			btn_park_brake = 1
+			if simDR_park_brake_valve == 0 then
+				simDR_park_brake_valve = 1
+			end
+			if simDR_parkbrake < 0.5 then
+				simDR_parkbrake = 1.0
+			end
+			if parking_brake_ratio < 0.5 then
+				parking_brake_ratio = 1.0
+			end
+		else
+			btn_park_brake = 0
+			if simDR_park_brake_valve == 1 then
+				simDR_park_brake_valve = 0
+			end
+			if simDR_parkbrake > 0.5 then
+				simDR_parkbrake = 0.0
+			end
+			if parking_brake_ratio > 0.5 then
+				parking_brake_ratio = 0.0
+			end
 		end
 	end
-	btn_park_brake = (parking_brake_ratio > 0.5) and 1 or 0
 	prev_btn_park_brake = btn_park_brake
 
 	-- 8. G2 Systems Panel: Sync Wing Anti-Ice (surface_heat_on -> left/right wing + tail heat)
@@ -546,7 +602,8 @@ function init_autopilot_all_modes()
 	btn_fms        = 0
 	btn_max_crz    = 0
 	btn_econ_crz   = 0
-	btn_park_brake = (parking_brake_ratio > 0.5) and 1 or 0
+	local is_init_braking = (simDR_parkbrake > 0.5) or (parking_brake_ratio > 0.5) or (simDR_park_brake_valve == 1)
+	btn_park_brake = is_init_braking and 1 or 0
 
 	prev_btn_at         = btn_at_pwr
 	prev_btn_toga       = btn_toga
