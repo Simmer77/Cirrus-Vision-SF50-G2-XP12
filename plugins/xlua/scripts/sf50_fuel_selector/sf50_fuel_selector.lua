@@ -152,24 +152,7 @@ end
 --function before_physics() end
 
 function after_physics()
-
-
-
-
-
-
-
-
 	init_fuel_AI()
-	-- G2 Automatic Fuel Tank Balancer (>50 lbs / ~7.5 gal imbalance when in normal ops)
-	if fuel_tank_selector ~= 0 then
-		if (fuel_qty_left - fuel_qty_right) > 50.0 then
-			fuel_tank_selector = 1
-		elseif (fuel_qty_right - fuel_qty_left) > 50.0 then
-			fuel_tank_selector = 3
-		end
-	end
-
 end
 
 --function after_replay() end
