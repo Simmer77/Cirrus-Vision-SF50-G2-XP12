@@ -20,6 +20,7 @@ simDR_groundspeed    = find_dataref("sim/flightmodel/position/groundspeed")
 
 -- Custom Datarefs for 3D Tablet and Dispatch
 sf50DR_tablet_show   = create_dataref("laminar/sf50/tablet/show", "number")
+sf50DR_tablet_show   = 1.0
 sf50DR_pax_count     = create_dataref("laminar/sf50/dispatch/pax_count", "number")
 sf50DR_cargo_kg      = create_dataref("laminar/sf50/dispatch/cargo_kg", "number")
 sf50DR_fuel_gal      = create_dataref("laminar/sf50/dispatch/fuel_gal", "number")
@@ -83,12 +84,12 @@ end
 -- COMMAND HANDLERS
 ----------------------------------------------------------------------------------------------------
 
--- AviTab Integration Datarefs
-local avitab_powered    = nil
-local avitab_enabled    = nil
-local avitab_brightness = nil
+-- AviTab Integration Datarefs (Global XLua Dataref Proxies)
+avitab_powered    = find_dataref("avitab/panel_powered")
+avitab_enabled    = find_dataref("avitab/panel_enabled")
+avitab_brightness = find_dataref("avitab/brightness")
 
-local function update_avitab_power()
+function update_avitab_power()
 	if avitab_powered == nil then
 		avitab_powered = find_dataref("avitab/panel_powered")
 	end
@@ -100,12 +101,22 @@ local function update_avitab_power()
 	end
 
 	if sf50DR_tablet_show >= 0.5 then
-		if avitab_powered ~= nil then avitab_powered = 1 end
-		if avitab_enabled ~= nil then avitab_enabled = 1 end
-		if avitab_brightness ~= nil then avitab_brightness = 1.0 end
+		if avitab_powered ~= nil then
+			avitab_powered = 1
+		end
+		if avitab_enabled ~= nil then
+			avitab_enabled = 1
+		end
+		if avitab_brightness ~= nil then
+			avitab_brightness = 1.0
+		end
 	else
-		if avitab_enabled ~= nil then avitab_enabled = 0 end
-		if avitab_powered ~= nil then avitab_powered = 0 end
+		if avitab_enabled ~= nil then
+			avitab_enabled = 0
+		end
+		if avitab_powered ~= nil then
+			avitab_powered = 0
+		end
 	end
 end
 

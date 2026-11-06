@@ -1,9 +1,9 @@
 {
     "panel": {
         "left": 520,
-        "bottom": 200,
+        "bottom": 228,
         "width": 490,
-        "height": 350,
+        "height": 294,
         "enabled": true,
         "hide_header": true
     }
