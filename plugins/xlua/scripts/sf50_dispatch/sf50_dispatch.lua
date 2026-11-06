@@ -1,6 +1,6 @@
 --
 -- CIRRUS VISION SF50 G2 — ELECTRONIC FLIGHT BAG (EFB) & DISPATCH MANAGER
--- Handles 3D Cockpit Tablet Mount, Live Fuel Loading, Passenger Payload & SimBrief Integration
+-- Handles 3D Cockpit Tablet Mount, Live Fuel Loading, Passenger Payload, SimBrief Integration & AviTab Navigraph
 --
 
 local KG_PER_GAL   = 3.064
@@ -21,6 +21,9 @@ simDR_groundspeed    = find_dataref("sim/flightmodel/position/groundspeed")
 -- Custom Datarefs for 3D Tablet and Dispatch
 sf50DR_tablet_show   = create_dataref("laminar/sf50/tablet/show", "number")
 sf50DR_tablet_show   = 1.0
+sf50DR_tablet_mode   = create_dataref("laminar/sf50/tablet/mode", "number")
+sf50DR_tablet_mode   = 0.0 -- 0: Cirrus EFB Dispatch, 1: AviTab Navigraph / Moving Map
+
 sf50DR_pax_count     = create_dataref("laminar/sf50/dispatch/pax_count", "number")
 sf50DR_cargo_kg      = create_dataref("laminar/sf50/dispatch/cargo_kg", "number")
 sf50DR_fuel_gal      = create_dataref("laminar/sf50/dispatch/fuel_gal", "number")
@@ -59,6 +62,7 @@ end
 local function parse_simbrief_file()
 	local paths = {
 		"sf50_simbrief.json",
+		"Aircraft/Simmr77/output_SF50G2_XP12/sf50_simbrief.json",
 		"Aircraft/Extra Aircraft/Cirrus SF-50/sf50_simbrief.json",
 		"Aircraft/Cirrus Vision SF50 G2/sf50_simbrief.json"
 	}
@@ -100,7 +104,8 @@ function update_avitab_power()
 		avitab_brightness = find_dataref("avitab/brightness")
 	end
 
-	if sf50DR_tablet_show >= 0.5 then
+	-- Only enable AviTab display when tablet is mounted AND user has selected Mode 1 (AviTab / Navigraph)
+	if sf50DR_tablet_show >= 0.5 and sf50DR_tablet_mode >= 0.5 then
 		if avitab_powered ~= nil then
 			avitab_powered = 1
 		end
@@ -126,6 +131,17 @@ function tablet_toggle_cmd(phase)
 			sf50DR_tablet_show = 0.0
 		else
 			sf50DR_tablet_show = 1.0
+		end
+		update_avitab_power()
+	end
+end
+
+function tablet_switch_mode_cmd(phase)
+	if phase == 0 then
+		if sf50DR_tablet_mode >= 0.5 then
+			sf50DR_tablet_mode = 0.0
+		else
+			sf50DR_tablet_mode = 1.0
 		end
 		update_avitab_power()
 	end
@@ -203,6 +219,7 @@ end
 -- CREATE COMMANDS
 ----------------------------------------------------------------------------------------------------
 create_command("laminar/sf50/tablet/toggle",      "Toggle Tablet EFB",                 tablet_toggle_cmd)
+create_command("laminar/sf50/tablet/switch_mode", "Switch Tablet Mode (EFB/AviTab)",   tablet_switch_mode_cmd)
 create_command("laminar/sf50/dispatch/pax_add",   "Dispatch: Add 1 Passenger",         pax_add_cmd)
 create_command("laminar/sf50/dispatch/pax_sub",   "Dispatch: Remove 1 Passenger",      pax_sub_cmd)
 create_command("laminar/sf50/dispatch/cargo_add", "Dispatch: Add 10 kg Cargo",         cargo_add_cmd)
@@ -219,6 +236,7 @@ create_command("laminar/sf50/dispatch/load_simbrief", "Dispatch: Load SimBrief P
 ----------------------------------------------------------------------------------------------------
 function flight_start()
 	sf50DR_tablet_show = 1.0 -- Mount tablet deployed by default
+	sf50DR_tablet_mode = 0.0 -- Default to Cirrus EFB Dispatch screen
 	update_avitab_power()
 	sf50DR_simbrief_ok = 0
 
