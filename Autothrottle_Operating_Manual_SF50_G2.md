@@ -129,3 +129,25 @@ Select one of **3 Cruise Profiles**:
 
 A dedicated, pre-calibrated SimBrief airframe profile matching the native XP12 Cirrus Vision Jet SF50 G2 specifications (FL310 ceiling, Williams FJ33-5A fuel flow, MTOW 6,000 lbs, accurate weights and PBN avionics) is available for 1-click import into your SimBrief fleet:
 * 🌐 **[Click here to import the official SimBrief Airframe Profile](https://dispatch.simbrief.com/airframes/share/eyJiYXNldHlwZSI6IlNGNTAiLCJpY2FvIjoiU0Y1MCIsInJlZyI6IkFMUDUxNiIsImZpbiI6IiIsInNlbGNhbCI6IiIsImhleGNvZGUiOiIiLCJwbGFuZm9ybWF0IjoiIiwiZmxpZ2h0cnVsZXMiOiIiLCJmbGlnaHR0eXBlIjoiZyIsInBsYW51bml0cyI6IjAiLCJhbHRuc2Fkdl9yYWRpdXMiOiIyODgiLCJhbHRuc2Fkdl91bml0c19yd3kiOiJmdCIsImFsdG5zYWR2X3J3eSI6IjM1MDAiLCJuYW1lIjoiVmlzaW9uIEpldCBTRjUwIEcyIiwiZW5naW5lcyI6IkZKMzMtNUEiLCJjb21tZW50cyI6IkNJUlJVUyBTRjUwIEcyIC0gWFAxMiBOQVRJVkUgT1ZFUkhBVUwiLCJwZXIiOiJCIiwiY2F0IjoiTCIsImV0b3BzdGhyZXNob2xkIjoiNjAiLCJldG9wc3JhbmdlIjoiIiwiZXF1aXAiOiJCREdSU1dZIiwidHJhbnNwb25kZXIiOiJMQjJVMiIsInBibiI6IkIyQzJEMk8yUzIiLCJleHRyYXJtayI6IkRBVC9WIFJNSy9TRjUwIEcyIFhQMTIiLCJtYW51YWxybWsiOiJDSVJSVVMgVklTSU9OIEpFVCBTRjUwIEcyIChYUDEyIE9WRVJIQVVMKS4gTVRPVyA2MDAwIExCUyAvIDI3MjIgS0csIENFSUxJTkcgRkwzMTAsIFdJTExJQU1TIEZKMzMtNUEgRkFERUMuIENPTVBMSUFOVCBXSVRIIFJWU00gQU5EIFBCTiBSTkFWL1JOUC4iLCJ3Z3R1bml0cyI6IktHUyIsIm1heHBheCI6IjUiLCJwYXh3Z3QiOiI4MiIsImJhZ3dndCI6IjEwIiwib2V3IjoiMTY5MiIsIm16ZnciOiIyMjIzIiwibXRvdyI6IjI3MjIiLCJtbHciOiIyNTE3IiwibWF4ZnVlbCI6IjkwNyIsIm1heGNhcmdvIjoiMTM2IiwiY2FyZ29tb2RlIjoiIiwiY29udHBjdCI6IiIsInJlc3ZydWxlIjoiIiwidGF4aWZ1ZWwiOiIyOSIsIm1pbmZvYiI6IiIsIm1pbmZvYl91bml0cyI6IndndCIsIm1pbmZvZCI6IiIsIm1pbmZvZF91bml0cyI6IndndCIsIm1lbGZ1ZWwiOiIiLCJtZWxmdWVsX3VuaXRzIjoid2d0IiwiYXRjZnVlbCI6IiIsImF0Y2Z1ZWxfdW5pdHMiOiJ3Z3QiLCJ3eHhmdWVsIjoiIiwid3h4ZnVlbF91bml0cyI6IndndCIsImFkZGVkZnVlbF9sYWJlbCI6ImV4dHJhIiwiYWRkZWRmdWVsIjoiIiwiYWRkZWRmdWVsX3VuaXRzIjoid2d0IiwidGFua2VyaW5nIjoiIiwidGFua2VyaW5nX3VuaXRzIjoid2d0IiwiZnVlbGZhY3RvciI6IlAwMCIsImNydWlzZW9mZnNldCI6IlAwMDAwIiwiY2VpbGluZyI6IjMxMDAwIiwiZGVmYXVsdGNydWlzZSI6Ik5PUk0iLCJkZWZhdWx0Y2kiOiIiLCJkZWZhdWx0Y2xpbWIiOiJOT1JNIiwiZGVmYXVsdGRlc2NlbnQiOiJOT1JNIiwidGhydXN0X3VuaXRzIjoibGJmIiwidGhydXN0IjoiMjA1MCIsImZsYXRyYXRpbmciOiIifQ--)
+
+---
+
+## 5. Electronic Flight Bag (EFB), AviTab & Live Dispatch
+
+### 3D Cockpit Tablet Mount
+* The SF50 G2 includes a dedicated 3D tablet (EFB) attached to the left window mount (`xPad_arm.obj`).
+* **Mount / Stow Interaction**: Simply click anywhere on the mount arm ball clamp or the tablet bezel in the 3D cockpit (or trigger command `laminar/sf50/tablet/toggle`) to mount or stow the tablet.
+
+### Navigraph Charts, Moving Map & SimBrief (AviTab Integration)
+* Built-in native support for the free **AviTab** plugin via pre-configured `AviTab.json`:
+  * **Navigraph Integration**: Login with your Navigraph subscription to access geo-referenced approach plates, SIDs, STARs, and interactive airport taxi diagrams with your aircraft position.
+  * **Moving Map**: High-resolution GPS moving map showing terrain and flight path.
+  * **SimBrief OFP Viewer**: View the operational flight plan directly inside the cockpit.
+
+### Live Payload & Fuel Dispatch Manager
+* The custom XLua dispatch module (`sf50_dispatch.lua`) allows real-time fueling and passenger management without pausing or opening X-Plane menus:
+  * **Passenger Loading**: Configure between 1 and 5 occupants (Pilot + up to 4 passengers @ 82 kg / 180 lbs each).
+  * **Cargo / Baggage**: Adjust luggage from 0 to 136 kg (300 lbs).
+  * **Quick Fuel Presets**: Instant loading for `MIN FUEL` (60 gal / 227 kg), `TABS` (140 gal / 429 kg), and `FULL TANKS` (296 gal / 907 kg), or fine adjustments in ±10 gal increments.
+  * **SimBrief 1-Click Load**: Command `laminar/sf50/dispatch/load_simbrief` reads your flight plan and automatically sets exact block fuel and passenger weights.
+  * **Instant Physics Sync**: Physical weight (`m_fixed`, `m_fuel1`, `m_fuel2`) and center-of-gravity update in real time with automated MTOW (6,000 lbs) safety status monitoring.

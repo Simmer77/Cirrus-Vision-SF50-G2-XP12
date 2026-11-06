@@ -1,0 +1,12 @@
+{
+    "flight_number": "ALP516",
+    "origin": "LIPZ",
+    "destination": "LSGG",
+    "route": "CHI ROTAR ALBET GVA",
+    "cruise_alt": "FL310",
+    "pax": 3,
+    "cargo_kg": 35.0,
+    "fuel_gal": 165.0,
+    "block_fuel_kg": 505.5,
+    "comments": "CIRRUS SF50 G2 SIMBRIEF FLIGHT PLAN INTEGRATION"
+}

@@ -112,3 +112,25 @@ Si possono scegliere **3 modalità di crociera**:
 
 È disponibile un profilo aeromobile ufficiale pre-calibrato per SimBrief, con tutti i dati certificati del nostro Cirrus Vision Jet SF50 G2 in X-Plane 12 (quota massima FL310, consumi Williams FJ33-5A, MTOW 2.722 kg / 6.000 lbs, pesi e avionica PBN) pronto da aggiungere con 1 clic alla tua flotta SimBrief:
 * 🌐 **[Clicca qui per importare il profilo SimBrief ufficiale](https://dispatch.simbrief.com/airframes/share/eyJiYXNldHlwZSI6IlNGNTAiLCJpY2FvIjoiU0Y1MCIsInJlZyI6IkFMUDUxNiIsImZpbiI6IiIsInNlbGNhbCI6IiIsImhleGNvZGUiOiIiLCJwbGFuZm9ybWF0IjoiIiwiZmxpZ2h0cnVsZXMiOiIiLCJmbGlnaHR0eXBlIjoiZyIsInBsYW51bml0cyI6IjAiLCJhbHRuc2Fkdl9yYWRpdXMiOiIyODgiLCJhbHRuc2Fkdl91bml0c19yd3kiOiJmdCIsImFsdG5zYWR2X3J3eSI6IjM1MDAiLCJuYW1lIjoiVmlzaW9uIEpldCBTRjUwIEcyIiwiZW5naW5lcyI6IkZKMzMtNUEiLCJjb21tZW50cyI6IkNJUlJVUyBTRjUwIEcyIC0gWFAxMiBOQVRJVkUgT1ZFUkhBVUwiLCJwZXIiOiJCIiwiY2F0IjoiTCIsImV0b3BzdGhyZXNob2xkIjoiNjAiLCJldG9wc3JhbmdlIjoiIiwiZXF1aXAiOiJCREdSU1dZIiwidHJhbnNwb25kZXIiOiJMQjJVMiIsInBibiI6IkIyQzJEMk8yUzIiLCJleHRyYXJtayI6IkRBVC9WIFJNSy9TRjUwIEcyIFhQMTIiLCJtYW51YWxybWsiOiJDSVJSVVMgVklTSU9OIEpFVCBTRjUwIEcyIChYUDEyIE9WRVJIQVVMKS4gTVRPVyA2MDAwIExCUyAvIDI3MjIgS0csIENFSUxJTkcgRkwzMTAsIFdJTExJQU1TIEZKMzMtNUEgRkFERUMuIENPTVBMSUFOVCBXSVRIIFJWU00gQU5EIFBCTiBSTkFWL1JOUC4iLCJ3Z3R1bml0cyI6IktHUyIsIm1heHBheCI6IjUiLCJwYXh3Z3QiOiI4MiIsImJhZ3dndCI6IjEwIiwib2V3IjoiMTY5MiIsIm16ZnciOiIyMjIzIiwibXRvdyI6IjI3MjIiLCJtbHciOiIyNTE3IiwibWF4ZnVlbCI6IjkwNyIsIm1heGNhcmdvIjoiMTM2IiwiY2FyZ29tb2RlIjoiIiwiY29udHBjdCI6IiIsInJlc3ZydWxlIjoiIiwidGF4aWZ1ZWwiOiIyOSIsIm1pbmZvYiI6IiIsIm1pbmZvYl91bml0cyI6IndndCIsIm1pbmZvZCI6IiIsIm1pbmZvZF91bml0cyI6IndndCIsIm1lbGZ1ZWwiOiIiLCJtZWxmdWVsX3VuaXRzIjoid2d0IiwiYXRjZnVlbCI6IiIsImF0Y2Z1ZWxfdW5pdHMiOiJ3Z3QiLCJ3eHhmdWVsIjoiIiwid3h4ZnVlbF91bml0cyI6IndndCIsImFkZGVkZnVlbF9sYWJlbCI6ImV4dHJhIiwiYWRkZWRmdWVsIjoiIiwiYWRkZWRmdWVsX3VuaXRzIjoid2d0IiwidGFua2VyaW5nIjoiIiwidGFua2VyaW5nX3VuaXRzIjoid2d0IiwiZnVlbGZhY3RvciI6IlAwMCIsImNydWlzZW9mZnNldCI6IlAwMDAwIiwiY2VpbGluZyI6IjMxMDAwIiwiZGVmYXVsdGNydWlzZSI6Ik5PUk0iLCJkZWZhdWx0Y2kiOiIiLCJkZWZhdWx0Y2xpbWIiOiJOT1JNIiwiZGVmYXVsdGRlc2NlbnQiOiJOT1JNIiwidGhydXN0X3VuaXRzIjoibGJmIiwidGhydXN0IjoiMjA1MCIsImZsYXRyYXRpbmciOiIifQ--)
+
+---
+
+## 5. Electronic Flight Bag (EFB), AviTab & Gestione Carico in Tempo Reale
+
+### Supporto Tablet 3D in Cabina
+* L'SF50 G2 include un tablet 3D dedicato (EFB) montato sul supporto del montante sinistro (`xPad_arm.obj`).
+* **Montaggio / Smontaggio Rapido**: Cliccando in cabina sul supporto o sulla cornice del tablet (o richiamando il comando `laminar/sf50/tablet/toggle`), il tablet compare o si nasconde all'istante.
+
+### Cartine Navigraph, Mappa GPS e SimBrief (Integrazione AviTab)
+* Supporto nativo integrato per il plugin gratuito **AviTab** (tramite `AviTab.json` preconfigurato):
+  * **Integrazione Navigraph**: Accesso con il tuo account Navigraph a carte di avvicinamento georeferenziate, SID, STAR e diagrammi aeroportuali con la posizione in tempo reale dell'aereo.
+  * **Moving Map**: Mappa GPS vettoriale ad alta risoluzione con visualizzazione di rotta e terreno.
+  * **Visualizzatore OFP SimBrief**: Consultazione diretta del piano operativo di volo all'interno del cockpit.
+
+### Gestione Carico Carburante & Passeggeri (Dispatch Manager)
+* Il modulo dedicato XLua (`sf50_dispatch.lua`) permette di caricare carburante e passeggeri in tempo reale senza dover mettere in pausa il simulatore né accedere ai menu di X-Plane:
+  * **Passeggeri**: Configurazione da 1 a 5 occupanti (Pilota + fino a 4 passeggeri calcolati a 82 kg ciascuno).
+  * **Bagagli / Merci**: Regolazione rapida da 0 a 136 kg.
+  * **Preimpostazioni Carburante**: Tasti rapidi `MIN FUEL` (60 gal / 227 kg), `TABS` (140 gal / 429 kg) e `FULL TANKS` (296 gal / 907 kg), oppure regolazione fine `±10 gal`.
+  * **Caricamento 1-Click da SimBrief**: Il comando `laminar/sf50/dispatch/load_simbrief` legge il piano di volo e allinea automaticamente il carburante di blocco e il numero di passeggeri previsti.
+  * **Fisica di Bordo Sincronizzata**: I pesi reali di simulazione (`m_fixed`, `m_fuel1`, `m_fuel2`) e il baricentro si aggiornano all'istante con controllo automatico del peso massimo al decollo (MTOW 6.000 lbs).

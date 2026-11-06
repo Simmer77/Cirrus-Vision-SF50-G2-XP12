@@ -35,7 +35,17 @@ A dedicated, pre-calibrated official SimBrief airframe profile matching the nati
 * **Zero-Overlap Touchscreen Layout**: Completely re-engineered GTC coordinate geometry across all secondary pages (`Systems`, `Auto Throttle`, and `Weight & Balance`). Navigation controls (`Back` and `Home`) are positioned along the dedicated right bezel margin (`POS 460.0`), eliminating overlaps with system text boxes and buttons.
 * **Native Touchscreen Visuals**: Restored the authentic dark metallic Garmin GTC palette with clean, pixel-perfect contrast.
 
-### 3. Flight Dynamics & Systems
+### 3. Electronic Flight Bag (EFB) & AviTab Cockpit Integration
+* **Fully Integrated 3D Cockpit Tablet (`tablet.obj`)**: High-fidelity tablet mounted on the captain side window articulated arm (`xPad_arm`).
+  * **Interactive Stow / Mount Toggle**: Click the window mount arm in the 3D cockpit to instantly deploy or stow the tablet out of your field of view (`laminar/sf50/tablet/toggle`).
+* **AviTab & Navigraph Ready (`AviTab.json`)**: When the free [AviTab plugin](https://forums.x-plane.org/index.php?/files/file/44825-avitab-vr-compatible-tablet-with-pdf-viewer-moving-maps-and-more/) is installed, the tablet provides full Navigraph charts, moving maps, approach plates, and SimBrief Operational Flight Plan (OFP) viewing directly inside the 3D cockpit.
+* **Live In-Cockpit Fuel & Payload Dispatch (`sf50_dispatch.lua`)**:
+  * Adjust fuel (Minimum, Standard Tabs, Full Tanks, +/-10 gal) and passenger / baggage weights live from inside the cockpit without pausing or opening the X-Plane weight menu.
+  * Real-time Gross Weight & MTOW (6,000 lbs) safety limiter preventing out-of-envelope loading.
+  * 1-Click SimBrief OFP payload synchronization (`load_simbrief`).
+* **Standalone Garmin Perspective Touch+ Standby EFB**: If AviTab is not installed, the tablet automatically displays a sleek, high-resolution Garmin Touch+ standby display with active aircraft branding.
+
+### 4. Flight Dynamics & Systems
 * **Real-World G2 Flight Envelope**: Certified maximum ceiling of **FL310** (upgraded from G1 FL280), Williams International FJ33-5A turbofan high-altitude thrust tables, and accurate V-speeds ($V_{SO}$ 67 KIAS, $V_{FE}$ 150 KIAS, $V_{MO}$ 250 KIAS / 0.530 M).
 * **Restored Control Subsystems**: Functional Nose Wheel Steering (`NWS`) toggle with active indicator, operational Cabin Pressure Dump (`CABIN DUMP`), and working TKS/IPS anti-ice boots.
 * **Native XP12 Engine**: Native 3D rain and ice windshield shaders (`ATTR_rain_glass`), photometric exterior and cabin LED lighting, and 64-bit XLua architecture.
