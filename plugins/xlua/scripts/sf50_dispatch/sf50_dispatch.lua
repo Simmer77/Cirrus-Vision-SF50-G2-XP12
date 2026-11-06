@@ -82,6 +82,33 @@ end
 ----------------------------------------------------------------------------------------------------
 -- COMMAND HANDLERS
 ----------------------------------------------------------------------------------------------------
+
+-- AviTab Integration Datarefs
+local avitab_powered    = nil
+local avitab_enabled    = nil
+local avitab_brightness = nil
+
+local function update_avitab_power()
+	if avitab_powered == nil then
+		avitab_powered = find_dataref("avitab/panel_powered")
+	end
+	if avitab_enabled == nil then
+		avitab_enabled = find_dataref("avitab/panel_enabled")
+	end
+	if avitab_brightness == nil then
+		avitab_brightness = find_dataref("avitab/brightness")
+	end
+
+	if sf50DR_tablet_show >= 0.5 then
+		if avitab_powered ~= nil then avitab_powered = 1 end
+		if avitab_enabled ~= nil then avitab_enabled = 1 end
+		if avitab_brightness ~= nil then avitab_brightness = 1.0 end
+	else
+		if avitab_enabled ~= nil then avitab_enabled = 0 end
+		if avitab_powered ~= nil then avitab_powered = 0 end
+	end
+end
+
 function tablet_toggle_cmd(phase)
 	if phase == 0 then
 		if sf50DR_tablet_show >= 0.5 then
@@ -89,6 +116,7 @@ function tablet_toggle_cmd(phase)
 		else
 			sf50DR_tablet_show = 1.0
 		end
+		update_avitab_power()
 	end
 end
 
@@ -180,6 +208,7 @@ create_command("laminar/sf50/dispatch/load_simbrief", "Dispatch: Load SimBrief P
 ----------------------------------------------------------------------------------------------------
 function flight_start()
 	sf50DR_tablet_show = 1.0 -- Mount tablet deployed by default
+	update_avitab_power()
 	sf50DR_simbrief_ok = 0
 
 	-- Read current fuel and payload from simulator state
@@ -197,6 +226,9 @@ function flight_start()
 end
 
 function after_physics()
+	-- Sync avitab panel power actively
+	update_avitab_power()
+
 	-- Keep gross weight and MTOW status actively synchronized
 	local current_fuel_kg = simDR_fuel1_kg + simDR_fuel2_kg
 	sf50DR_fuel_kg = current_fuel_kg

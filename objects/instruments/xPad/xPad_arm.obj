@@ -2567,5 +2567,4 @@ IDX 1843
 IDX 1842
 IDX 1741
 ATTR_light_level 0.000000 1.000000 sim/cockpit2/electrical/panel_brightness_ratio[0]
-ATTR_manip_command button laminar/sf50/tablet/toggle Mount/Unmount EFB Tablet
 TRIS 0 7038

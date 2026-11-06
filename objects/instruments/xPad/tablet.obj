@@ -114,6 +114,5 @@ IDX 83
 
 ANIM_begin
 ANIM_hide 0.000000 0.500000 laminar/sf50/tablet/show
-ATTR_manip_command button laminar/sf50/tablet/toggle Toggle Tablet EFB
 TRIS 0 126
 ANIM_end
