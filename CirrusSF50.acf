@@ -23523,10 +23523,10 @@ gen_rotary gen_rot_SPLASHSCREE
   CLICK_DY 0
 
   GROUP CIRRUS_EFB_DISPATCH
-    SHOW_EQUAL 1.000000 sim/cockpit2/switches/custom_slider_on[20]
+    SHOW_EQUAL 1.000000 sim/cockpit2/switches/custom_slider_on[0]
     gen_LED efb_fuel_kg
-      POS 810.000000 313.000000
-      IMAGE GPS_LED_cyan
+      POS 786.000000 318.000000
+      IMAGE GPS_LED_white
       DATAREF sim/flightmodel/weight/m_fuel_total
       LIGHT_MODE GLASS_AUTO
       LIGHT_RHEOSTAT 1
@@ -23542,8 +23542,8 @@ gen_rotary gen_rot_SPLASHSCREE
       ROUNDING ROUND_ROUND
 
     gen_LED efb_payload_kg
-      POS 940.000000 333.000000
-      IMAGE GPS_LED_cyan
+      POS 916.000000 338.000000
+      IMAGE GPS_LED_white
       DATAREF sim/flightmodel/weight/m_fixed
       LIGHT_MODE GLASS_AUTO
       LIGHT_RHEOSTAT 1
@@ -23559,8 +23559,8 @@ gen_rotary gen_rot_SPLASHSCREE
       ROUNDING ROUND_ROUND
 
     gen_LED efb_tow_kg
-      POS 940.000000 313.000000
-      IMAGE GPS_LED_cyan
+      POS 916.000000 318.000000
+      IMAGE GPS_LED_white
       DATAREF sim/flightmodel/weight/m_total
       LIGHT_MODE GLASS_AUTO
       LIGHT_RHEOSTAT 1
@@ -23576,9 +23576,9 @@ gen_rotary gen_rot_SPLASHSCREE
       ROUNDING ROUND_ROUND
 
     gen_LED efb_cargo_kg
-      POS 866.000000 399.000000
-      IMAGE GPS_LED_cyan
-      DATAREF sim/cockpit2/switches/custom_slider_on[21]
+      POS 842.000000 396.000000
+      IMAGE GPS_LED_white
+      DATAREF sim/cockpit2/switches/custom_slider_on[2]
       LIGHT_MODE GLASS_AUTO
       LIGHT_RHEOSTAT 1
       BUS_SRC 1073741827

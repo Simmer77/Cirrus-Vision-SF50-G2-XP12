@@ -1,6 +1,5 @@
 --
 -- CIRRUS VISION SF50 G2 — ELECTRONIC FLIGHT BAG (EFB) & DISPATCH MANAGER
--- Handles 3D Cockpit Tablet Mount, Live Fuel Loading, Passenger Payload, SimBrief Integration & AviTab Navigraph
 -- Pure Metric (Kilograms) Dispatch Management
 --
 
@@ -34,10 +33,15 @@ sf50DR_gross_kg      = create_dataref("laminar/sf50/dispatch/gross_weight_kg", "
 sf50DR_mtow_status   = create_dataref("laminar/sf50/dispatch/mtow_status", "number")
 sf50DR_simbrief_ok   = create_dataref("laminar/sf50/dispatch/simbrief_loaded", "number")
 
--- Custom slider datarefs for generic panel display
-simDR_slider20       = find_dataref("sim/cockpit2/switches/custom_slider_on[20]")
-simDR_slider21       = find_dataref("sim/cockpit2/switches/custom_slider_on[21]")
-simDR_slider22       = find_dataref("sim/cockpit2/switches/custom_slider_on[22]")
+-- Preset indicators (1 = active, 0 = inactive)
+sf50DR_preset_min    = create_dataref("laminar/sf50/dispatch/preset_min", "number")
+sf50DR_preset_tabs   = create_dataref("laminar/sf50/dispatch/preset_tabs", "number")
+sf50DR_preset_full   = create_dataref("laminar/sf50/dispatch/preset_full", "number")
+
+-- Free Custom sliders for panel display (Sliders 0..9 are completely unused)
+simDR_slider0        = find_dataref("sim/cockpit2/switches/custom_slider_on[0]")
+simDR_slider2        = find_dataref("sim/cockpit2/switches/custom_slider_on[2]")
+simDR_slider3        = find_dataref("sim/cockpit2/switches/custom_slider_on[3]")
 
 ----------------------------------------------------------------------------------------------------
 -- HELPER FUNCTIONS
@@ -63,11 +67,16 @@ local function apply_dispatch_kg(pax, cargo_kg, fuel_kg)
 	sf50DR_gross_lbs = gross_kg * LBS_PER_KG
 	sf50DR_mtow_status = (gross_kg > MTOW_KG) and 1 or 0
 
-	if simDR_slider21 ~= nil then
-		simDR_slider21 = cargo_kg
+	-- Update presets: MIN 184, TABS 429, FULL 907
+	sf50DR_preset_min  = (math.abs(fuel_kg - 184.0) < 5.0) and 1 or 0
+	sf50DR_preset_tabs = (math.abs(fuel_kg - 429.0) < 5.0) and 1 or 0
+	sf50DR_preset_full = (math.abs(fuel_kg - 907.0) < 5.0) and 1 or 0
+
+	if simDR_slider2 ~= nil then
+		simDR_slider2 = cargo_kg
 	end
-	if simDR_slider22 ~= nil then
-		simDR_slider22 = pax
+	if simDR_slider3 ~= nil then
+		simDR_slider3 = pax
 	end
 end
 
@@ -104,7 +113,6 @@ end
 -- COMMAND HANDLERS
 ----------------------------------------------------------------------------------------------------
 
--- AviTab Integration Datarefs
 avitab_powered    = find_dataref("avitab/panel_powered")
 avitab_enabled    = find_dataref("avitab/panel_enabled")
 avitab_brightness = find_dataref("avitab/brightness")
@@ -120,28 +128,17 @@ function update_avitab_power()
 		avitab_brightness = find_dataref("avitab/brightness")
 	end
 
-	-- Only enable AviTab display when tablet is mounted AND user has selected Mode 1 (AviTab / Navigraph)
 	if sf50DR_tablet_show >= 0.5 and sf50DR_tablet_mode >= 0.5 then
-		if avitab_powered ~= nil then
-			avitab_powered = 1
-		end
-		if avitab_enabled ~= nil then
-			avitab_enabled = 1
-		end
-		if avitab_brightness ~= nil then
-			avitab_brightness = 1.0
-		end
+		if avitab_powered ~= nil then avitab_powered = 1 end
+		if avitab_enabled ~= nil then avitab_enabled = 1 end
+		if avitab_brightness ~= nil then avitab_brightness = 1.0 end
 	else
-		if avitab_enabled ~= nil then
-			avitab_enabled = 0
-		end
-		if avitab_powered ~= nil then
-			avitab_powered = 0
-		end
+		if avitab_enabled ~= nil then avitab_enabled = 0 end
+		if avitab_powered ~= nil then avitab_powered = 0 end
 	end
 
-	if simDR_slider20 ~= nil then
-		simDR_slider20 = (sf50DR_tablet_show >= 0.5 and sf50DR_tablet_mode < 0.5) and 1.0 or 0.0
+	if simDR_slider0 ~= nil then
+		simDR_slider0 = (sf50DR_tablet_show >= 0.5 and sf50DR_tablet_mode < 0.5) and 1.0 or 0.0
 	end
 end
 
@@ -193,31 +190,31 @@ end
 
 function fuel_min_cmd(phase)
 	if phase == 0 then
-		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, 184.0) -- 184 kg legal min (~60 gal)
+		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, 184.0)
 	end
 end
 
 function fuel_tabs_cmd(phase)
 	if phase == 0 then
-		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, 429.0) -- 429 kg tabs (~140 gal)
+		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, 429.0)
 	end
 end
 
 function fuel_full_cmd(phase)
 	if phase == 0 then
-		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, 907.0) -- 907 kg full tanks (~296 gal)
+		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, 907.0)
 	end
 end
 
 function fuel_add_cmd(phase)
 	if phase == 0 then
-		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, sf50DR_fuel_kg + 25.0) -- +25 KG step
+		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, sf50DR_fuel_kg + 25.0)
 	end
 end
 
 function fuel_sub_cmd(phase)
 	if phase == 0 then
-		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, sf50DR_fuel_kg - 25.0) -- -25 KG step
+		apply_dispatch_kg(sf50DR_pax_count, sf50DR_cargo_kg, sf50DR_fuel_kg - 25.0)
 	end
 end
 
@@ -228,7 +225,6 @@ function load_simbrief_cmd(phase)
 			apply_dispatch_kg(pax, cargo, fuel)
 			sf50DR_simbrief_ok = 1
 		else
-			-- Standard default balanced load (2 PAX, 25 kg baggage, 429 kg Tabs)
 			apply_dispatch_kg(2, 25.0, 429.0)
 			sf50DR_simbrief_ok = 1
 		end
@@ -247,36 +243,30 @@ create_command("laminar/sf50/dispatch/cargo_sub", "Dispatch: Remove 10 kg Cargo"
 create_command("laminar/sf50/dispatch/fuel_min",  "Dispatch: Set Min Fuel (184 kg)",   fuel_min_cmd)
 create_command("laminar/sf50/dispatch/fuel_tabs", "Dispatch: Set Tabs Fuel (429 kg)",  fuel_tabs_cmd)
 create_command("laminar/sf50/dispatch/fuel_full", "Dispatch: Set Full Tanks (907 kg)", fuel_full_cmd)
-
--- 25 KG Fuel Step commands (with backward compatible aliases)
 create_command("laminar/sf50/dispatch/fuel_add25", "Dispatch: Add 25 kg Fuel",        fuel_add_cmd)
 create_command("laminar/sf50/dispatch/fuel_sub25", "Dispatch: Sub 25 kg Fuel",        fuel_sub_cmd)
 create_command("laminar/sf50/dispatch/fuel_add10", "Dispatch: Add 25 kg Fuel",        fuel_add_cmd)
 create_command("laminar/sf50/dispatch/fuel_sub10", "Dispatch: Sub 25 kg Fuel",        fuel_sub_cmd)
-
 create_command("laminar/sf50/dispatch/load_simbrief", "Dispatch: Load SimBrief Plan", load_simbrief_cmd)
 
 ----------------------------------------------------------------------------------------------------
 -- RUNTIME
 ----------------------------------------------------------------------------------------------------
 function flight_start()
-	sf50DR_tablet_show = 1.0 -- Mount tablet deployed by default
-	sf50DR_tablet_mode = 0.0 -- Default to Cirrus EFB Dispatch screen
-	
-	-- Initialize to 2 PAX, 25 kg baggage, Tabs fuel (429 kg)
+	sf50DR_tablet_show = 1.0
+	sf50DR_tablet_mode = 0.0
 	apply_dispatch_kg(2, 25.0, 429.0)
 	update_avitab_power()
 end
 
 function after_physics()
-	-- Maintain live sync of slider datarefs
-	if simDR_slider20 ~= nil then
-		simDR_slider20 = (sf50DR_tablet_show >= 0.5 and sf50DR_tablet_mode < 0.5) and 1.0 or 0.0
+	if simDR_slider0 ~= nil then
+		simDR_slider0 = (sf50DR_tablet_show >= 0.5 and sf50DR_tablet_mode < 0.5) and 1.0 or 0.0
 	end
-	if simDR_slider21 ~= nil then
-		simDR_slider21 = sf50DR_cargo_kg
+	if simDR_slider2 ~= nil then
+		simDR_slider2 = sf50DR_cargo_kg
 	end
-	if simDR_slider22 ~= nil then
-		simDR_slider22 = sf50DR_pax_count
+	if simDR_slider3 ~= nil then
+		simDR_slider3 = sf50DR_pax_count
 	end
 end
