@@ -38,9 +38,9 @@ sf50DR_preset_min    = create_dataref("laminar/sf50/dispatch/preset_min", "numbe
 sf50DR_preset_tabs   = create_dataref("laminar/sf50/dispatch/preset_tabs", "number")
 sf50DR_preset_full   = create_dataref("laminar/sf50/dispatch/preset_full", "number")
 
--- Free Custom sliders for panel display (Sliders 0..9 are completely unused)
+-- Free Custom sliders for panel display
 simDR_slider0        = find_dataref("sim/cockpit2/switches/custom_slider_on[0]")
-simDR_slider2        = find_dataref("sim/cockpit2/switches/custom_slider_on[2]")
+simDR_slider2        = find_dataref("sim/flightmodel2/misc/custom_slider_ratio[2]")
 simDR_slider3        = find_dataref("sim/cockpit2/switches/custom_slider_on[3]")
 
 ----------------------------------------------------------------------------------------------------
