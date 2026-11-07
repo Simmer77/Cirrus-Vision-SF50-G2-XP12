@@ -120,33 +120,134 @@ local function apply_dispatch_kg(pax, cargo_kg, fuel_kg)
 	end
 end
 
-local function parse_simbrief_file()
-	local paths = {
-		"sf50_simbrief.json",
-		"Aircraft/Simmr77/output_SF50G2_XP12/sf50_simbrief.json",
-		"Aircraft/Extra Aircraft/Cirrus SF-50/sf50_simbrief.json",
-		"Aircraft/Cirrus Vision SF50 G2/sf50_simbrief.json"
+local function get_aircraft_dir_paths(filename)
+	return {
+		filename,
+		"Aircraft/Simmr77/output_SF50G2_XP12/" .. filename,
+		"Aircraft/Extra Aircraft/Cirrus SF-50/" .. filename,
+		"Aircraft/Cirrus Vision SF50 G2/" .. filename
 	}
+end
+
+local function get_simbrief_user()
+	local paths = get_aircraft_dir_paths("simbrief_user.txt")
 	for _, p in ipairs(paths) do
 		local f = io.open(p, "r")
 		if f then
-			local content = f:read("*a")
+			local line = f:read("*l")
 			f:close()
-			if content then
-				local pax = tonumber(content:match('"pax"%s*:%s*(%d+)'))
-				local cargo = tonumber(content:match('"cargo_kg"%s*:%s*([%d%.]+)'))
-				local fuel_kg = tonumber(content:match('"fuel_kg"%s*:%s*([%d%.]+)'))
-				if not fuel_kg then
-					local fuel_gal = tonumber(content:match('"fuel_gal"%s*:%s*([%d%.]+)'))
-					if fuel_gal then fuel_kg = fuel_gal * KG_PER_GAL end
-				end
-				if pax and cargo and fuel_kg then
-					return pax, cargo, fuel_kg
-				end
+			if line and line:match("%w+") then
+				return line:match("^%s*(.-)%s*$")
 			end
 		end
 	end
-	return nil, nil, nil
+	return "1106351"
+end
+
+local function parse_simbrief_raw(content)
+	if not content or #content < 50 then return nil end
+
+	local units = content:match('"units"%s*:%s*"([^"]+)"') or "kgs"
+	local is_lbs = (units:lower() == "lbs")
+	local LBS_TO_KG = 1.0 / 2.20462
+
+	local pax = tonumber(content:match('"pax_count"%s*:%s*"?(%d+)"?'))
+		or tonumber(content:match('"pax"%s*:%s*(%d+)'))
+		or 2
+
+	local cargo = tonumber(content:match('"cargo_kg"%s*:%s*([%d%.]+)'))
+		or tonumber(content:match('"cargo"%s*:%s*"?([%d%.]+)"?'))
+		or 0
+
+	local bag_count = tonumber(content:match('"bag_count"%s*:%s*"?(%d+)"?')) or 0
+	local bag_weight = tonumber(content:match('"bag_weight"%s*:%s*"?([%d%.]+)"?')) or 0
+
+	local total_cargo = cargo
+	if total_cargo <= 0 and bag_count > 0 then
+		total_cargo = bag_count * bag_weight
+	end
+
+	local fuel_ramp = tonumber(content:match('"plan_ramp"%s*:%s*"?([%d%.]+)"?'))
+		or tonumber(content:match('"block_fuel_kg"%s*:%s*([%d%.]+)'))
+		or tonumber(content:match('"fuel_kg"%s*:%s*([%d%.]+)'))
+	local fuel_takeoff = tonumber(content:match('"plan_takeoff"%s*:%s*"?([%d%.]+)"?'))
+	local fuel = fuel_ramp or fuel_takeoff
+
+	if not fuel then
+		local fuel_gal = tonumber(content:match('"fuel_gal"%s*:%s*([%d%.]+)'))
+		if fuel_gal then fuel = fuel_gal * KG_PER_GAL end
+	end
+	if not fuel then fuel = 429.0 end
+
+	if is_lbs then
+		total_cargo = total_cargo * LBS_TO_KG
+		fuel = fuel * LBS_TO_KG
+	end
+
+	-- Clamping to SF50 bounds
+	if pax < 1 then pax = 1 end
+	if pax > 5 then pax = 5 end
+	if fuel < 184.0 then fuel = 184.0 end
+	if fuel > 907.0 then fuel = 907.0 end
+	if total_cargo < 0 then total_cargo = 0 end
+	if total_cargo > 140.0 then total_cargo = 140.0 end
+
+	total_cargo = math.floor((total_cargo / 5.0) + 0.5) * 5.0
+	fuel = math.floor(fuel + 0.5)
+
+	local origin = content:match('"origin"%s*:%s*{(.-)}')
+	local orig_icao = origin and origin:match('"icao_code"%s*:%s*"([^"]+)"') or content:match('"origin"%s*:%s*"([^"]+)"') or "----"
+	local dest = content:match('"destination"%s*:%s*{(.-)}')
+	local dest_icao = dest and dest:match('"icao_code"%s*:%s*"([^"]+)"') or content:match('"destination"%s*:%s*"([^"]+)"') or "----"
+	local flt = content:match('"general"%s*:%s*{(.-)}')
+	local flt_num = flt and flt:match('"flight_number"%s*:%s*"([^"]+)"') or content:match('"flight_number"%s*:%s*"([^"]+)"') or "516"
+
+	return pax, total_cargo, fuel, orig_icao, dest_icao, flt_num
+end
+
+local function save_simbrief_json(pax, cargo, fuel, orig, dest, flt)
+	local content = string.format('{\n    "flight_number": "%s",\n    "origin": "%s",\n    "destination": "%s",\n    "pax": %d,\n    "cargo_kg": %.1f,\n    "fuel_kg": %.1f,\n    "block_fuel_kg": %.1f,\n    "comments": "CIRRUS SF50 G2 LIVE SIMBRIEF SYNC"\n}\n',
+		flt or "516", orig or "----", dest or "----", pax, cargo, fuel, fuel)
+	local paths = get_aircraft_dir_paths("sf50_simbrief.json")
+	for _, p in ipairs(paths) do
+		local f = io.open(p, "w")
+		if f then
+			f:write(content)
+			f:close()
+		end
+	end
+end
+
+local function sync_simbrief_live()
+	local user = get_simbrief_user()
+	local cmd = 'curl -s -m 5 "https://www.simbrief.com/api/xml.fetcher.php?userid=' .. tostring(user) .. '&json=1"'
+	local pipe = io.popen(cmd)
+	if pipe then
+		local content = pipe:read("*a")
+		pipe:close()
+		if content and #content > 100 then
+			local p, c, f, orig, dest, flt = parse_simbrief_raw(content)
+			if p and c and f then
+				save_simbrief_json(p, c, f, orig, dest, flt)
+				return p, c, f
+			end
+		end
+	end
+
+	local paths = get_aircraft_dir_paths("sf50_simbrief.json")
+	for _, path in ipairs(paths) do
+		local file = io.open(path, "r")
+		if file then
+			local content = file:read("*a")
+			file:close()
+			local p, c, f = parse_simbrief_raw(content)
+			if p and c and f then
+				return p, c, f
+			end
+		end
+	end
+
+	return 2, 25.0, 429.0
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -260,14 +361,9 @@ end
 
 function load_simbrief_cmd(phase)
 	if phase == 0 then
-		local pax, cargo, fuel = parse_simbrief_file()
-		if pax and cargo and fuel then
-			apply_dispatch_kg(pax, cargo, fuel)
-			sf50DR_simbrief_ok = 1
-		else
-			apply_dispatch_kg(2, 25.0, 429.0)
-			sf50DR_simbrief_ok = 1
-		end
+		local pax, cargo, fuel = sync_simbrief_live()
+		apply_dispatch_kg(pax, cargo, fuel)
+		sf50DR_simbrief_ok = 1
 	end
 end
 
