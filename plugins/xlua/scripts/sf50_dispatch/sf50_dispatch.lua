@@ -7,6 +7,7 @@ local KG_PER_GAL   = 3.064
 local LBS_PER_KG   = 2.20462
 local OEW_KG       = 1692.0
 local MTOW_KG      = 2722.0
+local PAX_WEIGHT_KG = 77.0 -- 170 lbs (Standard FAA / FSEconomy adult passenger weight)
 
 ----------------------------------------------------------------------------------------------------
 -- DATAREFS
@@ -64,12 +65,17 @@ simDR_slider3        = find_dataref("sim/cockpit2/switches/custom_slider_on[3]")
 ----------------------------------------------------------------------------------------------------
 -- HELPER FUNCTIONS
 ----------------------------------------------------------------------------------------------------
-local function apply_dispatch_kg(pax, cargo_kg, fuel_kg)
+local function apply_dispatch_kg(pax, cargo_kg, fuel_kg, explicit_payload_kg)
 	pax      = math.max(1, math.min(5, math.floor(pax + 0.5)))
 	cargo_kg = math.max(0.0, math.min(136.0, cargo_kg))
 	fuel_kg  = math.max(184.0, math.min(907.0, fuel_kg))
 
-	local payload_kg = (pax * 82.0) + cargo_kg
+	local payload_kg
+	if explicit_payload_kg ~= nil and explicit_payload_kg > 0 then
+		payload_kg = explicit_payload_kg
+	else
+		payload_kg = (pax * PAX_WEIGHT_KG) + cargo_kg
+	end
 
 	simDR_payload_kg = payload_kg
 	simDR_fuel1_kg   = fuel_kg * 0.5
@@ -158,17 +164,12 @@ local function parse_simbrief_raw(content)
 		or tonumber(content:match('"pax"%s*:%s*(%d+)'))
 		or 2
 
+	local payload = tonumber(content:match('"payload"%s*:%s*"?([%d%.]+)"?'))
+		or tonumber(content:match('"payload_kg"%s*:%s*([%d%.]+)'))
+
 	local cargo = tonumber(content:match('"cargo_kg"%s*:%s*([%d%.]+)'))
 		or tonumber(content:match('"cargo"%s*:%s*"?([%d%.]+)"?'))
 		or 0
-
-	local bag_count = tonumber(content:match('"bag_count"%s*:%s*"?(%d+)"?')) or 0
-	local bag_weight = tonumber(content:match('"bag_weight"%s*:%s*"?([%d%.]+)"?')) or 0
-
-	local total_cargo = cargo
-	if total_cargo <= 0 and bag_count > 0 then
-		total_cargo = bag_count * bag_weight
-	end
 
 	local fuel_ramp = tonumber(content:match('"plan_ramp"%s*:%s*"?([%d%.]+)"?'))
 		or tonumber(content:match('"block_fuel_kg"%s*:%s*([%d%.]+)'))
@@ -183,7 +184,8 @@ local function parse_simbrief_raw(content)
 	if not fuel then fuel = 429.0 end
 
 	if is_lbs then
-		total_cargo = total_cargo * LBS_TO_KG
+		if payload then payload = payload * LBS_TO_KG end
+		cargo = cargo * LBS_TO_KG
 		fuel = fuel * LBS_TO_KG
 	end
 
@@ -192,10 +194,19 @@ local function parse_simbrief_raw(content)
 	if pax > 5 then pax = 5 end
 	if fuel < 184.0 then fuel = 184.0 end
 	if fuel > 907.0 then fuel = 907.0 end
-	if total_cargo < 0 then total_cargo = 0 end
-	if total_cargo > 140.0 then total_cargo = 140.0 end
 
-	total_cargo = math.floor((total_cargo / 5.0) + 0.5) * 5.0
+	-- FSEconomy / SimBrief exact payload matching:
+	-- If explicit payload is given (e.g. 308 kg), preserve it exactly and determine cargo by difference:
+	local total_cargo = cargo
+	if payload and payload > 0 then
+		total_cargo = math.max(0.0, payload - (pax * PAX_WEIGHT_KG))
+		if total_cargo < 1.0 then total_cargo = 0.0 end
+		total_cargo = math.floor(total_cargo + 0.5)
+	else
+		total_cargo = math.floor((total_cargo / 5.0) + 0.5) * 5.0
+		payload = (pax * PAX_WEIGHT_KG) + total_cargo
+	end
+
 	fuel = math.floor(fuel + 0.5)
 
 	local origin = content:match('"origin"%s*:%s*{(.-)}')
@@ -205,12 +216,12 @@ local function parse_simbrief_raw(content)
 	local flt = content:match('"general"%s*:%s*{(.-)}')
 	local flt_num = flt and flt:match('"flight_number"%s*:%s*"([^"]+)"') or content:match('"flight_number"%s*:%s*"([^"]+)"') or "516"
 
-	return pax, total_cargo, fuel, orig_icao, dest_icao, flt_num
+	return pax, total_cargo, fuel, orig_icao, dest_icao, flt_num, payload
 end
 
-local function save_simbrief_json(pax, cargo, fuel, orig, dest, flt)
-	local content = string.format('{\n    "flight_number": "%s",\n    "origin": "%s",\n    "destination": "%s",\n    "pax": %d,\n    "cargo_kg": %.1f,\n    "fuel_kg": %.1f,\n    "block_fuel_kg": %.1f,\n    "comments": "CIRRUS SF50 G2 LIVE SIMBRIEF SYNC"\n}\n',
-		flt or "516", orig or "----", dest or "----", pax, cargo, fuel, fuel)
+local function save_simbrief_json(pax, cargo, fuel, orig, dest, flt, payload)
+	local content = string.format('{\n    "flight_number": "%s",\n    "origin": "%s",\n    "destination": "%s",\n    "pax": %d,\n    "cargo_kg": %.1f,\n    "payload_kg": %.1f,\n    "fuel_kg": %.1f,\n    "block_fuel_kg": %.1f,\n    "comments": "CIRRUS SF50 G2 LIVE SIMBRIEF SYNC (FSECONOMY COMPATIBLE)"\n}\n',
+		flt or "516", orig or "----", dest or "----", pax, cargo, payload or (pax * PAX_WEIGHT_KG + cargo), fuel, fuel)
 	local paths = get_aircraft_dir_paths("sf50_simbrief.json")
 	for _, p in ipairs(paths) do
 		local f = io.open(p, "w")
@@ -249,14 +260,14 @@ local function sync_simbrief_live()
 	end
 
 	if content and #content > 200 and (content:find('"params"') or content:find('"weights"')) then
-		local p, c, f, orig, dest, flt = parse_simbrief_raw(content)
+		local p, c, f, orig, dest, flt, pay = parse_simbrief_raw(content)
 		if p and c and f then
-			save_simbrief_json(p, c, f, orig, dest, flt)
+			save_simbrief_json(p, c, f, orig, dest, flt, pay)
 			if dbg then
-				dbg:write(string.format("Parsed OK: Pax=%d Cargo=%.1f Fuel=%.1f %s->%s Flight=%s\n", p, c, f, orig or "?", dest or "?", flt or "?"))
+				dbg:write(string.format("Parsed OK: Pax=%d Cargo=%.1f Fuel=%.1f Payload=%.1f %s->%s Flight=%s\n", p, c, f, pay or 0, orig or "?", dest or "?", flt or "?"))
 				dbg:close()
 			end
-			return p, c, f
+			return p, c, f, orig, dest, flt, pay
 		end
 	end
 
@@ -270,13 +281,13 @@ local function sync_simbrief_live()
 		if file then
 			local local_content = file:read("*a")
 			file:close()
-			local p, c, f = parse_simbrief_raw(local_content)
+			local p, c, f, orig, dest, flt, pay = parse_simbrief_raw(local_content)
 			if p and c and f then
 				if dbg then
 					dbg:write("Loaded from local file: " .. path .. "\n")
 					dbg:close()
 				end
-				return p, c, f
+				return p, c, f, orig, dest, flt, pay
 			end
 		end
 	end
@@ -285,7 +296,7 @@ local function sync_simbrief_live()
 		dbg:write("Fallback to hardcoded defaults.\n")
 		dbg:close()
 	end
-	return 2, 25.0, 429.0
+	return 2, 0.0, 429.0, "----", "----", "516", 154.0
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -399,8 +410,8 @@ end
 
 function load_simbrief_cmd(phase)
 	if phase == 0 then
-		local pax, cargo, fuel = sync_simbrief_live()
-		apply_dispatch_kg(pax, cargo, fuel)
+		local pax, cargo, fuel, orig, dest, flt, explicit_payload = sync_simbrief_live()
+		apply_dispatch_kg(pax, cargo, fuel, explicit_payload)
 		sf50DR_simbrief_ok = 1
 	end
 end
