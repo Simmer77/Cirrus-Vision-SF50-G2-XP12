@@ -257,6 +257,57 @@ function sf50_g2_econ_crz_CMDhandler(phase, _)
 end
 sf50CMD_g2_econ_crz = create_command("laminar/sf50/g2/econ_cruise_mach", "SF50 G2 Economy Cruise Speed (0.489M)", sf50_g2_econ_crz_CMDhandler)
 
+-- Autothrottle Arm / Toggle Handlers (Auto T ON)
+function sf50_g2_at_toggle_CMDhandler(phase, _)
+	if phase == 0 then
+		if g2_at_active == 0 then
+			enter_at_speed_mode()
+		else
+			g2_at_active   = 0
+			g2_thrust_mode = 0
+			g2_fms_mode    = 0
+			g2_crz_preset  = 0
+			sf50DR_g2_fms_speed_mode = 0
+		end
+	end
+end
+sf50CMD_g2_at_toggle = create_command("laminar/sf50/g2/autothrottle_toggle", "SF50 G2 Autothrottle Toggle (Auto T ON)", sf50_g2_at_toggle_CMDhandler)
+cmd_at_toggle        = replace_command("sim/autopilot/autothrottle_toggle", sf50_g2_at_toggle_CMDhandler)
+cmd_at_arm           = replace_command("sim/autopilot/autothrottle_arm",    sf50_g2_at_toggle_CMDhandler)
+
+-- Speed Mode Toggle & Select Handlers (KTS / Mach)
+function sf50_g2_speed_toggle_CMDhandler(phase, _)
+	if phase == 0 then
+		if airspeed_is_mach == 1 then
+			select_kts_mode()
+		else
+			g2_fms_mode = 0
+			g2_crz_preset = 0
+			sf50DR_g2_fms_speed_mode = 0
+			select_mach_mode(nil)
+		end
+	end
+end
+sf50CMD_g2_spd_toggle = create_command("laminar/sf50/g2/speed_mode_toggle", "SF50 G2 Speed Mode Toggle (KTS/Mach)", sf50_g2_speed_toggle_CMDhandler)
+cmd_spd_toggle        = replace_command("sim/autopilot/knots_mach_toggle",  sf50_g2_speed_toggle_CMDhandler)
+
+function sf50_g2_speed_kts_CMDhandler(phase, _)
+	if phase == 0 then
+		select_kts_mode()
+	end
+end
+sf50CMD_g2_spd_kts = create_command("laminar/sf50/g2/speed_mode_kts", "SF50 G2 Speed Mode Select Knots (KTS)", sf50_g2_speed_kts_CMDhandler)
+
+function sf50_g2_speed_mach_CMDhandler(phase, _)
+	if phase == 0 then
+		g2_fms_mode = 0
+		g2_crz_preset = 0
+		sf50DR_g2_fms_speed_mode = 0
+		select_mach_mode(nil)
+	end
+end
+sf50CMD_g2_spd_mach = create_command("laminar/sf50/g2/speed_mode_mach", "SF50 G2 Speed Mode Select Mach", sf50_g2_speed_mach_CMDhandler)
+
 -- Emergency Level Button Handler
 function lvl_ebtn_handler(phase, duration)
 	if phase == 0 then
