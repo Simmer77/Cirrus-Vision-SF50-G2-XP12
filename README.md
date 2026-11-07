@@ -1,24 +1,25 @@
 # Cirrus Vision SF50 G2 — Native X-Plane 12 Community Overhaul
+**Release v1.1.0**
 
 [![X-Plane 12 Compatible](https://img.shields.io/badge/X--Plane-12.00%2B-blue.svg)](https://www.x-plane.com/)
-[![Version](https://img.shields.io/badge/version-v1.0.0-green.svg)](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases)
+[![Version](https://img.shields.io/badge/version-v1.1.0-green.svg)](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases)
 [![Aircraft](https://img.shields.io/badge/Type-Very%20Light%20Jet%20(VLJ)-orange.svg)]()
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-lightgrey.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 A comprehensive, community-driven modernization and native systems overhaul bringing the **Cirrus Vision Jet SF50 G2** to **X-Plane 12**. 
 
-Built upon the default Laminar Research Cirrus SF50 base airframe, this package delivers an authentic G2 experience with real-world flight performance, full digital autothrottle integration, Garmin Perspective Touch+ enhancements, and deep systems modeling calibrated directly against official Cirrus Flight Manuals.
+Built upon the default Laminar Research Cirrus SF50 base airframe, this package delivers an authentic G2 experience with real-world flight performance, full digital autothrottle integration, Garmin Perspective Touch+ enhancements, a dedicated 3D cockpit Electronic Flight Bag (EFB), live in-cockpit weight & fuel dispatching with SimBrief/FSEconomy synchronization, and deep systems modeling calibrated directly against official Cirrus Flight Manuals.
 
 ---
 
 ## 🌐 SimBrief Airframe Profile
 
-A dedicated, pre-calibrated official SimBrief airframe profile matching the native XP12 Cirrus Vision Jet SF50 G2 (certified FL310 ceiling, Williams FJ33-5A engine performance & fuel flow, MTOW 6,000 lbs, accurate weights and PBN avionics) is available for 1-click import into your fleet:
+A dedicated, pre-calibrated official SimBrief airframe profile matching the native XP12 Cirrus Vision Jet SF50 G2 (certified FL310 ceiling, Williams FJ33-5A engine performance & fuel flow, MTOW 2,722 kg / 6,000 lbs, accurate weights and PBN avionics) is available for 1-click import into your fleet:
 * 👉 **[Click here to import the official SimBrief Airframe Profile](https://dispatch.simbrief.com/airframes/share/eyJiYXNldHlwZSI6IlNGNTAiLCJpY2FvIjoiU0Y1MCIsInJlZyI6IkFMUDUxNiIsImZpbiI6IiIsInNlbGNhbCI6IiIsImhleGNvZGUiOiIiLCJwbGFuZm9ybWF0IjoiIiwiZmxpZ2h0cnVsZXMiOiIiLCJmbGlnaHR0eXBlIjoiZyIsInBsYW51bml0cyI6IjAiLCJhbHRuc2Fkdl9yYWRpdXMiOiIyODgiLCJhbHRuc2Fkdl91bml0c19yd3kiOiJmdCIsImFsdG5zYWR2X3J3eSI6IjM1MDAiLCJuYW1lIjoiVmlzaW9uIEpldCBTRjUwIEcyIiwiZW5naW5lcyI6IkZKMzMtNUEiLCJjb21tZW50cyI6IkNJUlJVUyBTRjUwIEcyIC0gWFAxMiBOQVRJVkUgT1ZFUkhBVUwiLCJwZXIiOiJCIiwiY2F0IjoiTCIsImV0b3BzdGhyZXNob2xkIjoiNjAiLCJldG9wc3JhbmdlIjoiIiwiZXF1aXAiOiJCREdSU1dZIiwidHJhbnNwb25kZXIiOiJMQjJVMiIsInBibiI6IkIyQzJEMk8yUzIiLCJleHRyYXJtayI6IkRBVC9WIFJNSy9TRjUwIEcyIFhQMTIiLCJtYW51YWxybWsiOiJDSVJSVVMgVklTSU9OIEpFVCBTRjUwIEcyIChYUDEyIE9WRVJIQVVMKS4gTVRPVyA2MDAwIExCUyAvIDI3MjIgS0csIENFSUxJTkcgRkwzMTAsIFdJTExJQU1TIEZKMzMtNUEgRkFERUMuIENPTVBMSUFOVCBXSVRIIFJWU00gQU5EIFBCTiBSTkFWL1JOUC4iLCJ3Z3R1bml0cyI6IktHUyIsIm1heHBheCI6IjUiLCJwYXh3Z3QiOiI4MiIsImJhZ3dndCI6IjEwIiwib2V3IjoiMTY5MiIsIm16ZnciOiIyMjIzIiwibXRvdyI6IjI3MjIiLCJtbHciOiIyNTE3IiwibWF4ZnVlbCI6IjkwNyIsIm1heGNhcmdvIjoiMTM2IiwiY2FyZ29tb2RlIjoiIiwiY29udHBjdCI6IiIsInJlc3ZydWxlIjoiIiwidGF4aWZ1ZWwiOiIyOSIsIm1pbmZvYiI6IiIsIm1pbmZvYl91bml0cyI6IndndCIsIm1pbmZvZCI6IiIsIm1pbmZvZF91bml0cyI6IndndCIsIm1lbGZ1ZWwiOiIiLCJtZWxmdWVsX3VuaXRzIjoid2d0IiwiYXRjZnVlbCI6IiIsImF0Y2Z1ZWxfdW5pdHMiOiJ3Z3QiLCJ3eHhmdWVsIjoiIiwid3h4ZnVlbF91bml0cyI6IndndCIsImFkZGVkZnVlbF9sYWJlbCI6ImV4dHJhIiwiYWRkZWRmdWVsIjoiIiwiYWRkZWRmdWVsX3VuaXRzIjoid2d0IiwidGFua2VyaW5nIjoiIiwidGFua2VyaW5nX3VuaXRzIjoid2d0IiwiZnVlbGZhY3RvciI6IlAwMCIsImNydWlzZW9mZnNldCI6IlAwMDAwIiwiY2VpbGluZyI6IjMxMDAwIiwiZGVmYXVsdGNydWlzZSI6Ik5PUk0iLCJkZWZhdWx0Y2kiOiIiLCJkZWZhdWx0Y2xpbWIiOiJOT1JNIiwiZGVmYXVsdGRlc2NlbnQiOiJOT1JNIiwidGhydXN0X3VuaXRzIjoibGJmIiwidGhydXN0IjoiMjA1MCIsImZsYXRyYXRpbmciOiIifQ--)**
 
 ---
 
-## ✈️ Key Features in v1.0.0
+## ✈️ Key Features in v1.1.0
 
 ### 1. Digital Autothrottle, FADEC & Autopilot Overhaul
 * **Dedicated Autothrottle State Machine (`sf50_autopilot.lua`)**: Fully modeled digital autothrottle with native support for `Auto T`, `TOGA`, `MCT`, `KTS`, `Mach`, `FMS`, `M CRS`, and `E CRS`.
@@ -29,21 +30,21 @@ A dedicated, pre-calibrated official SimBrief airframe profile matching the nati
   * **`E CRS` (Economy Cruise — 0.489 Mach / ~280 KTAS)**: Stabilizes ~44 gal/h fuel flow for long-range endurance up to 1,275 NM.
 
 ### 2. Garmin Perspective Touch+ (GTC) & Cockpit Ergonomics
-* **Interactive GPU (Ground Power Unit) Touchscreen Button**: Located directly on the Center GTC **Systems** page. Tapping the button connects external 28V ground power with a vivid neon-green active indicator bar, allowing full cockpit and avionics configuration without draining main batteries.
-  * *Safety Feature*: Automatically disconnects when ground roll begins (`groundspeed > 3 kts`) or upon takeoff.
+* **Interactive GPU (Ground Power Unit) Touchscreen Button**: Located directly on the Center GTC **Systems** page. Tapping the button connects external 28V ground power with a vivid green active indicator bar, allowing full cockpit and avionics configuration without draining main batteries. Automatically disconnects upon roll or takeoff.
 * **2D Resizable Pop-up Displays**: Click anywhere on the pilot's Primary Flight Display (PFD) or copilot's Multi-Function Display (MFD) glass screens to instantly pop up high-resolution, scalable 2D windows.
 * **Zero-Overlap Touchscreen Layout**: Completely re-engineered GTC coordinate geometry across all secondary pages (`Systems`, `Auto Throttle`, and `Weight & Balance`). Navigation controls (`Back` and `Home`) are positioned along the dedicated right bezel margin (`POS 460.0`), eliminating overlaps with system text boxes and buttons.
-* **Native Touchscreen Visuals**: Restored the authentic dark metallic Garmin GTC palette with clean, pixel-perfect contrast.
 
-### 3. Electronic Flight Bag (EFB) & AviTab Cockpit Integration
+### 3. Electronic Flight Bag (EFB), AviTab & Live Dispatch Manager
 * **Fully Integrated 3D Cockpit Tablet (`tablet.obj`)**: High-fidelity tablet mounted on the captain side window articulated arm (`xPad_arm`).
-  * **Interactive Stow / Mount Toggle**: Click the window mount arm in the 3D cockpit to instantly deploy or stow the tablet out of your field of view (`laminar/sf50/tablet/toggle`).
-* **AviTab & Navigraph Ready (`AviTab.json`)**: When the free [AviTab plugin](https://forums.x-plane.org/index.php?/files/file/44825-avitab-vr-compatible-tablet-with-pdf-viewer-moving-maps-and-more/) is installed, the tablet provides full Navigraph charts, moving maps, approach plates, and SimBrief Operational Flight Plan (OFP) viewing directly inside the 3D cockpit.
+  * **Quick-Release Latch & Night LED**: Click the top latch on the tablet frame or click the window mount arm to mount or stow the tablet. Features an ambient-illuminated green LED that remains visible in total cockpit darkness.
+  * **Dual-Mode Operation with Hardware/Screen Home Button**: Tap the Home button on the tablet bezel or screen to instantly switch between the **Native EFB Dispatch** page and the **AviTab Navigation Suite** (Navigraph charts, approach plates, and moving map).
 * **Live In-Cockpit Fuel & Payload Dispatch (`sf50_dispatch.lua`)**:
-  * Adjust fuel (Minimum, Standard Tabs, Full Tanks, +/-10 gal) and passenger / baggage weights live from inside the cockpit without pausing or opening the X-Plane weight menu.
-  * Real-time Gross Weight & MTOW (6,000 lbs) safety limiter preventing out-of-envelope loading.
-  * 1-Click SimBrief OFP payload synchronization (`load_simbrief`).
-* **Standalone Garmin Perspective Touch+ Standby EFB**: If AviTab is not installed, the tablet automatically displays a sleek, high-resolution Garmin Touch+ standby display with active aircraft branding.
+  * Adjust fuel (`MIN` 184 kg, `TABS` 429 kg, `FULL` 907 kg, `+/- 25 KG`) and cabin passengers (1 to 5 occupants) / cargo (`+/- 10 KG`) live from inside the cockpit without opening X-Plane menus.
+  * Real-time Load Sheet displaying OEW (1,692 kg), Payload, Fuel, and Estimated Takeoff Weight (EST TOW) with active **Weight Envelope** status indicator.
+* **SimBrief 1-Click Sync & FSEconomy Compatibility**:
+  * Add your SimBrief Pilot ID or username to `simbrief_user.txt`.
+  * Click **`SYNC SIMBRIEF OFP`** on the tablet: fetches live flight plan data securely from SimBrief's API and populates aircraft weights automatically.
+  * **Reversed Cargo Calculation**: Strictly adheres to the standard $77\text{ kg}$ ($170\text{ lbs}$) passenger rule and auto-balances cargo by difference ($\text{Cargo} = \text{SimBrief Payload} - (\text{PAX} \times 77\text{ kg})$) to guarantee 100% flight validation in **FSEconomy** and **OnAir**.
 
 ### 4. Flight Dynamics & Systems
 * **Real-World G2 Flight Envelope**: Certified maximum ceiling of **FL310** (upgraded from G1 FL280), Williams International FJ33-5A turbofan high-altitude thrust tables, and accurate V-speeds ($V_{SO}$ 67 KIAS, $V_{FE}$ 150 KIAS, $V_{MO}$ 250 KIAS / 0.530 M).
@@ -54,9 +55,9 @@ A dedicated, pre-calibrated official SimBrief airframe profile matching the nati
 
 ## 📖 Pilot Operating Handbooks (Included)
 
-Detailed pilot operating handbooks are included directly within the aircraft folder:
-* 🇬🇧 [**`Autothrottle_Operating_Manual_SF50_G2.md`**](Autothrottle_Operating_Manual_SF50_G2.md) — Comprehensive operating manual in English covering system theory, GTC controls, and Standard Operating Procedures (SOP) across all flight phases.
-* 🇮🇹 [**`Manuale_Operativo_Autothrottle_SF50_G2.md`**](Manuale_Operativo_Autothrottle_SF50_G2.md) — Manuale operativo completo e dettagliato in lingua italiana.
+Detailed pilot operating handbooks and command reference guides are included in the aircraft folder:
+* 🇬🇧 [**`Autothrottle_Operating_Manual_SF50_G2.md`**](Autothrottle_Operating_Manual_SF50_G2.md) ([PDF Version](Autothrottle_Operating_Manual_SF50_G2.pdf)) — Full operating manual in English covering systems theory, SOP by flight phase, EFB operation, and complete command reference tables.
+* 🇮🇹 [**`Manuale_Operativo_Autothrottle_SF50_G2.md`**](Manuale_Operativo_Autothrottle_SF50_G2.md) ([Versione PDF](Manuale_Operativo_Autothrottle_SF50_G2.pdf)) — Manuale operativo completo e dettagliato in lingua italiana.
 
 ---
 
@@ -79,12 +80,13 @@ Detailed pilot operating handbooks are included directly within the aircraft fol
 
 ## 📥 Installation
 
-1. Go to the [**Releases**](https://github.com/Simmer77/Cirrus-Vision-SF50-G2-XP12/releases) page and download `Cirrus_Vision_SF50_G2_XP12_v1.0.0.zip`.
-2. Extract the archive into your X-Plane 12 aircraft directory:
+1. Download the release archive `Cirrus_Vision_SF50_G2_XP12_v1.1.0.zip`.
+2. Extract the archive into your X-Plane 12 aircraft directory so that it forms:
    ```text
    X-Plane 12/Aircraft/Cirrus Vision SF50 G2/
    ```
-3. Launch **X-Plane 12** and select the **Cirrus Vision SF50 G2**.
+3. Open `simbrief_user.txt` in the aircraft folder and paste your SimBrief Pilot ID or username to enable 1-click live dispatch sync.
+4. Launch **X-Plane 12** and select the **Cirrus Vision SF50 G2**.
 
 ---
 

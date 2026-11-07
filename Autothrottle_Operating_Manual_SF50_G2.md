@@ -1,6 +1,7 @@
-# Autothrottle, FADEC & Autopilot Operating Manual — Cirrus Vision SF50 G2 (X-Plane 12)
+# Autothrottle, FADEC & Systems Operating Manual — Cirrus Vision SF50 G2 (X-Plane 12)
+**Release Version: v1.1.0**
 
-This operational guide provides real-world and simulated operating procedures for the **Perspective Touch+ digital Autothrottle / FADEC system** and the integrated Garmin GFC 700 digital autopilot on the **Cirrus Vision SF50 G2** in X-Plane 12.
+This operational guide provides real-world and simulated operating procedures for the **Perspective Touch+ digital Autothrottle / FADEC system**, the integrated Garmin GFC 700 digital autopilot, and the **3D Cockpit Electronic Flight Bag (EFB)** on the **Cirrus Vision SF50 G2** in X-Plane 12.
 
 ---
 
@@ -132,22 +133,74 @@ A dedicated, pre-calibrated SimBrief airframe profile matching the native XP12 C
 
 ---
 
-## 5. Electronic Flight Bag (EFB), AviTab & Live Dispatch
+## 5. Electronic Flight Bag (EFB), AviTab & Live Dispatch Manager
 
-### 3D Cockpit Tablet Mount
-* The SF50 G2 includes a dedicated 3D tablet (EFB) attached to the left window mount (`xPad_arm.obj`).
-* **Mount / Stow Interaction**: Simply click anywhere on the mount arm ball clamp or the tablet bezel in the 3D cockpit (or trigger command `laminar/sf50/tablet/toggle`) to mount or stow the tablet.
+### 3D Cockpit Tablet Mount & Quick-Release Latch
+* The SF50 G2 includes a dedicated 3D tablet (EFB) mounted on the captain side window articulated arm (`xPad_arm.obj` / `tablet.obj`).
+* **Mount / Stow Interaction**: Click the physical quick-release latch located on the top center of the tablet frame (or click anywhere on the window mount arm ball clamp, or trigger command `laminar/sf50/tablet/toggle`).
+* **Night Illuminator Indicator**: In complete cockpit darkness, the top release latch features an integrated ambient-lit green LED illuminator, ensuring effortless tablet deployment or stowing during night flights.
 
-### Navigraph Charts, Moving Map & SimBrief (AviTab Integration)
-* Built-in native support for the free **AviTab** plugin via pre-configured `AviTab.json`:
-  * **Navigraph Integration**: Login with your Navigraph subscription to access geo-referenced approach plates, SIDs, STARs, and interactive airport taxi diagrams with your aircraft position.
-  * **Moving Map**: High-resolution GPS moving map showing terrain and flight path.
-  * **SimBrief OFP Viewer**: View the operational flight plan directly inside the cockpit.
+### Dual Mode Architecture & Home Button
+* The EFB functions in two seamlessly integrated modes: **Native EFB Dispatch** and **AviTab Navigation Suite**.
+* **Physical & Screen Home Button**: A dedicated Home icon button is situated on the right-hand bezel of the tablet (and replicated at the bottom of the touchscreen). Clicking either button instantly toggles between:
+  1. **Native EFB Dispatch Page**: In-cockpit fueling, passenger cabin seating, weight and balance calculations, and SimBrief synchronization.
+  2. **AviTab Navigation Suite**: Navigraph digital charts, geo-referenced approach plates, interactive airport moving maps, and full SimBrief OFP viewer (requires the free AviTab plugin).
 
-### Live Payload & Fuel Dispatch Manager
-* The custom XLua dispatch module (`sf50_dispatch.lua`) allows real-time fueling and passenger management without pausing or opening X-Plane menus:
-  * **Passenger Loading**: Configure between 1 and 5 occupants (Pilot + up to 4 passengers @ 82 kg / 180 lbs each).
-  * **Cargo / Baggage**: Adjust luggage from 0 to 136 kg (300 lbs).
-  * **Quick Fuel Presets**: Instant loading for `MIN FUEL` (60 gal / 227 kg), `TABS` (140 gal / 429 kg), and `FULL TANKS` (296 gal / 907 kg), or fine adjustments in ±10 gal increments.
-  * **SimBrief 1-Click Load**: Command `laminar/sf50/dispatch/load_simbrief` reads your flight plan and automatically sets exact block fuel and passenger weights.
-  * **Instant Physics Sync**: Physical weight (`m_fixed`, `m_fuel1`, `m_fuel2`) and center-of-gravity update in real time with automated MTOW (6,000 lbs) safety status monitoring.
+### Native EFB Dispatch Page Features
+* **Calibrated High-Legibility Dark UI**: Engineered specifically for high contrast, minimal cockpit glare, and crisp readability across VR headsets and 4K displays.
+* **Fuel Management**:
+  * One-click quick presets: **`MIN`** (184 kg / 405 lbs), **`TABS`** (429 kg / 945 lbs), **`FULL`** (907 kg / 2,000 lbs).
+  * Fine increment buttons: **`[-] 25 KG`** and **`[+] 25 KG`** (strictly clamped within 184–907 kg).
+* **Cabin Payload Management**:
+  * Interactive 5-seat passenger selector with dynamic cabin silhouette indicators (**`[-] PAX`**, **`[+] PAX`**, 1 to 5 occupants).
+  * Dedicated cargo/baggage weight controls (**`[-] 10 KG`**, **`[+] 10 KG`**).
+* **Load Sheet & Balance**:
+  * Real-time digital readout of Operating Empty Weight (**`OEW: 1,692 KG`**), total **`PAYLOAD`**, current **`FUEL`**, and Estimated Takeoff Weight (**`EST TOW`**).
+* **Dynamic Weight Envelope Annunciator**:
+  * **`WEIGHT ENVELOPE: NORMAL (OK)`** (green indicator) when gross weight is within structural limits.
+  * **`WEIGHT ENVELOPE: OVERWEIGHT (CAUTION)`** (amber/red indicator) if total weight exceeds Maximum Takeoff Weight (**MTOW: 2,722 kg / 6,000 lbs**).
+
+### SimBrief 1-Click Synchronization & FSEconomy Reverse Payload Engine
+* **User Configuration (`simbrief_user.txt`)**:
+  * Open `simbrief_user.txt` in the root aircraft folder and enter your **SimBrief Pilot ID** (e.g. `123456`) or your SimBrief username.
+* **1-Click Live Sync**:
+  * Tap **`SYNC SIMBRIEF OFP`** on the tablet screen (or run command `laminar/sf50/dispatch/load_simbrief`).
+  * The custom XLua engine securely queries the SimBrief live API, downloads your latest dispatch OFP, and injects block fuel and payload directly into X-Plane's physics flight model in real time.
+* **FSEconomy / Virtual Airline Reverse Calculation**:
+  * FSEconomy and standard commercial operations mandate passenger weight at exactly **$77\text{ kg}$ ($170\text{ lbs}$)** and validate total payload down to the exact single kilogram.
+  * Our dispatch engine extracts SimBrief's exact total payload and automatically balances cargo using a reverse deduction formula:
+    $$\text{Cargo (KG)} = \text{Total SimBrief Payload} - (\text{Passenger Count} \times 77.0\text{ KG})$$
+  * This guarantees that your fuel, payload, and gross weight in X-Plane match your SimBrief flight plan and FSEconomy flight validation to the exact single digit!
+
+---
+
+## 6. Complete Command Reference Guide
+
+All custom aircraft commands are accessible for mapping to your physical joystick, yoke, throttle quadrant, or keyboard shortcuts via the standard X-Plane 12 Settings menu:
+
+| System / Subsystem | Command Identifier | Description / Function |
+| :--- | :--- | :--- |
+| **Autothrottle** | `laminar/sf50/g2/autothrottle_toggle` | Toggle Master Autothrottle (`Auto T ON / OFF`) |
+| **FADEC Thrust** | `laminar/sf50/g2/toga_thrust` | Command Takeoff / Go-Around 100% thrust (`TOGA`) |
+| **FADEC Thrust** | `laminar/sf50/g2/mct_thrust` | Command Max Continuous Thrust limit (`MCT`) |
+| **Speed Selection** | `laminar/sf50/g2/speed_mode_toggle` | Toggle speed mode between Knots (`KTS`) and `Mach` |
+| **Speed Selection** | `laminar/sf50/g2/speed_mode_kts` | Directly select Knots (`KTS`) mode |
+| **Speed Selection** | `laminar/sf50/g2/speed_mode_mach` | Directly select `Mach` mode |
+| **Cruise Presets** | `laminar/sf50/g2/max_cruise_mach` | Activate Max Cruise profile (`0.530 M`) |
+| **Cruise Presets** | `laminar/sf50/g2/econ_cruise_mach` | Activate Economy Cruise profile (`0.489 M`) |
+| **EFB Tablet** | `laminar/sf50/tablet/toggle` | Mount / Stow the 3D cockpit EFB tablet |
+| **EFB Tablet** | `laminar/sf50/tablet/switch_mode` | Switch EFB display between Dispatch and AviTab |
+| **Live Dispatch** | `laminar/sf50/dispatch/load_simbrief` | 1-Click live SimBrief OFP flight plan synchronization |
+| **Live Dispatch** | `laminar/sf50/dispatch/pax_add` | Add 1 passenger to cabin payload |
+| **Live Dispatch** | `laminar/sf50/dispatch/pax_sub` | Remove 1 passenger from cabin payload |
+| **Live Dispatch** | `laminar/sf50/dispatch/cargo_add` | Add 10 kg cargo/baggage weight |
+| **Live Dispatch** | `laminar/sf50/dispatch/cargo_sub` | Remove 10 kg cargo/baggage weight |
+| **Live Dispatch** | `laminar/sf50/dispatch/fuel_min` | Load Minimum Fuel preset (`184 kg`) |
+| **Live Dispatch** | `laminar/sf50/dispatch/fuel_tabs` | Load Standard Tabs Fuel preset (`429 kg`) |
+| **Live Dispatch** | `laminar/sf50/dispatch/fuel_full` | Load Full Tanks Fuel preset (`907 kg`) |
+| **Live Dispatch** | `laminar/sf50/dispatch/fuel_add25` | Add 25 kg fuel to wing tanks |
+| **Live Dispatch** | `laminar/sf50/dispatch/fuel_sub25` | Remove 25 kg fuel from wing tanks |
+| **Avionics & Cockpit** | `sim/GPS/g1000n1_popup` | Toggle 2D resizable window for Pilot PFD |
+| **Avionics & Cockpit** | `sim/GPS/g1000n3_popup` | Toggle 2D resizable window for Copilot MFD |
+| **Systems** | `sim/electrical/GPU_on` / `sim/electrical/GPU_off` | Connect / Disconnect 28V Ground Power Unit (GPU) |
+| **Flight Controls** | `laminar/sf50/ai/fltControl_quick_start` | Initialize flight controls and steering systems |

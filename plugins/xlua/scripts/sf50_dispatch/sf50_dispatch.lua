@@ -129,9 +129,12 @@ end
 local function get_aircraft_dir_paths(filename)
 	return {
 		filename,
+		"Aircraft/Cirrus Vision SF50 G2/" .. filename,
+		"Aircraft/Simmr77/Cirrus Vision SF50 G2/" .. filename,
+		"Aircraft/Cirrus Vision SF50 G2 XP12/" .. filename,
+		"Aircraft/output_SF50G2_XP12/" .. filename,
 		"Aircraft/Simmr77/output_SF50G2_XP12/" .. filename,
-		"Aircraft/Extra Aircraft/Cirrus SF-50/" .. filename,
-		"Aircraft/Cirrus Vision SF50 G2/" .. filename
+		"Aircraft/Extra Aircraft/Cirrus SF-50/" .. filename
 	}
 end
 
@@ -140,17 +143,20 @@ local function get_simbrief_user()
 	for _, p in ipairs(paths) do
 		local f = io.open(p, "r")
 		if f then
-			local line = f:read("*l")
-			f:close()
-			if line then
-				local clean = line:match("%w+")
-				if clean and #clean > 0 then
-					return clean
+			for raw_line in f:lines() do
+				local trimmed = raw_line:match("^%s*(.-)%s*$")
+				if trimmed and #trimmed > 0 and not trimmed:match("^#") and not trimmed:match("^YOUR_") then
+					f:close()
+					local clean = trimmed:match("%w+")
+					if clean and #clean > 0 then
+						return clean
+					end
 				end
 			end
+			f:close()
 		end
 	end
-	return "1106351"
+	return nil
 end
 
 local function parse_simbrief_raw(content)
@@ -234,40 +240,43 @@ end
 
 local function sync_simbrief_live()
 	local user = get_simbrief_user()
-	local is_num = tostring(user):match("^%d+$")
-	local param = is_num and "userid=" or "username="
-	local url = "https://www.simbrief.com/api/xml.fetcher.php?" .. param .. tostring(user) .. "&json=1"
-
-	local dbg = io.open("/tmp/sf50_simbrief_debug.log", "a")
-	if dbg then
-		dbg:write("\n[" .. os.date("%Y-%m-%d %H:%M:%S") .. "] Sync requested for user: " .. tostring(user) .. " URL: " .. url .. "\n")
-	end
-
-	-- Run curl with clean LD_LIBRARY_PATH (bypasses Steam Linux Runtime library conflict)
-	local cmd = 'LD_LIBRARY_PATH="" curl -k -s -L -m 8 "' .. url .. '" 2>/dev/null || curl -k -s -L -m 8 "' .. url .. '" 2>/dev/null'
-	local pipe = io.popen(cmd)
 	local content = nil
-	if pipe then
-		content = pipe:read("*a")
-		pipe:close()
-	end
 
-	if dbg then
-		dbg:write("Curl response bytes: " .. tostring(content and #content or 0) .. "\n")
-		if content and #content < 200 then
-			dbg:write("Short response: " .. tostring(content) .. "\n")
+	if user and #user > 0 then
+		local is_num = tostring(user):match("^%d+$")
+		local param = is_num and "userid=" or "username="
+		local url = "https://www.simbrief.com/api/xml.fetcher.php?" .. param .. tostring(user) .. "&json=1"
+
+		local dbg = io.open("/tmp/sf50_simbrief_debug.log", "a")
+		if dbg then
+			dbg:write("\n[" .. os.date("%Y-%m-%d %H:%M:%S") .. "] Sync requested for user: " .. tostring(user) .. " URL: " .. url .. "\n")
 		end
-	end
 
-	if content and #content > 200 and (content:find('"params"') or content:find('"weights"')) then
-		local p, c, f, orig, dest, flt, pay = parse_simbrief_raw(content)
-		if p and c and f then
-			save_simbrief_json(p, c, f, orig, dest, flt, pay)
-			if dbg then
-				dbg:write(string.format("Parsed OK: Pax=%d Cargo=%.1f Fuel=%.1f Payload=%.1f %s->%s Flight=%s\n", p, c, f, pay or 0, orig or "?", dest or "?", flt or "?"))
-				dbg:close()
+		-- Run curl with clean LD_LIBRARY_PATH (bypasses Steam Linux Runtime library conflict)
+		local cmd = 'LD_LIBRARY_PATH="" curl -k -s -L -m 8 "' .. url .. '" 2>/dev/null || curl -k -s -L -m 8 "' .. url .. '" 2>/dev/null'
+		local pipe = io.popen(cmd)
+		if pipe then
+			content = pipe:read("*a")
+			pipe:close()
+		end
+
+		if dbg then
+			dbg:write("Curl response bytes: " .. tostring(content and #content or 0) .. "\n")
+			if content and #content < 200 then
+				dbg:write("Short response: " .. tostring(content) .. "\n")
 			end
-			return p, c, f, orig, dest, flt, pay
+		end
+
+		if content and #content > 200 and (content:find('"params"') or content:find('"weights"')) then
+			local p, c, f, orig, dest, flt, pay = parse_simbrief_raw(content)
+			if p and c and f then
+				save_simbrief_json(p, c, f, orig, dest, flt, pay)
+				if dbg then
+					dbg:write(string.format("Parsed OK: Pax=%d Cargo=%.1f Fuel=%.1f Payload=%.1f %s->%s Flight=%s\n", p, c, f, pay or 0, orig or "?", dest or "?", flt or "?"))
+					dbg:close()
+				end
+				return p, c, f, orig, dest, flt, pay
+			end
 		end
 	end
 

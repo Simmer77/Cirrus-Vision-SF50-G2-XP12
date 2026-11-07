@@ -1,1 +1,5 @@
-1106351
+# CIRRUS VISION SF50 G2 - SIMBRIEF INTEGRATION CONFIGURATION
+# Enter your SimBrief Pilot ID (numbers only, e.g. 123456) or your SimBrief Username on the line below.
+# You can find your Pilot ID at: https://www.simbrief.com/system/dispatch.php (in Account Settings)
+#
+YOUR_SIMBRIEF_PILOT_ID
