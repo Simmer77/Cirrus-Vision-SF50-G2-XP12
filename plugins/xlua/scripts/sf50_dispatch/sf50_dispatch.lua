@@ -38,6 +38,24 @@ sf50DR_preset_min    = create_dataref("laminar/sf50/dispatch/preset_min", "numbe
 sf50DR_preset_tabs   = create_dataref("laminar/sf50/dispatch/preset_tabs", "number")
 sf50DR_preset_full   = create_dataref("laminar/sf50/dispatch/preset_full", "number")
 
+-- Live Digit Datarefs for 3D Numeric Readouts
+sf50DR_cargo_d1      = create_dataref("laminar/sf50/dispatch/cargo_d1", "number")
+sf50DR_cargo_d2      = create_dataref("laminar/sf50/dispatch/cargo_d2", "number")
+sf50DR_cargo_d3      = create_dataref("laminar/sf50/dispatch/cargo_d3", "number")
+
+sf50DR_fuel_d1       = create_dataref("laminar/sf50/dispatch/fuel_d1", "number")
+sf50DR_fuel_d2       = create_dataref("laminar/sf50/dispatch/fuel_d2", "number")
+sf50DR_fuel_d3       = create_dataref("laminar/sf50/dispatch/fuel_d3", "number")
+
+sf50DR_pay_d1        = create_dataref("laminar/sf50/dispatch/pay_d1", "number")
+sf50DR_pay_d2        = create_dataref("laminar/sf50/dispatch/pay_d2", "number")
+sf50DR_pay_d3        = create_dataref("laminar/sf50/dispatch/pay_d3", "number")
+
+sf50DR_tow_d1        = create_dataref("laminar/sf50/dispatch/tow_d1", "number")
+sf50DR_tow_d2        = create_dataref("laminar/sf50/dispatch/tow_d2", "number")
+sf50DR_tow_d3        = create_dataref("laminar/sf50/dispatch/tow_d3", "number")
+sf50DR_tow_d4        = create_dataref("laminar/sf50/dispatch/tow_d4", "number")
+
 -- Free Custom sliders for panel display
 simDR_slider0        = find_dataref("sim/cockpit2/switches/custom_slider_on[0]")
 simDR_slider2        = find_dataref("sim/flightmodel2/misc/custom_slider_ratio[2]")
@@ -71,6 +89,28 @@ local function apply_dispatch_kg(pax, cargo_kg, fuel_kg)
 	sf50DR_preset_min  = (math.abs(fuel_kg - 184.0) < 5.0) and 1 or 0
 	sf50DR_preset_tabs = (math.abs(fuel_kg - 429.0) < 5.0) and 1 or 0
 	sf50DR_preset_full = (math.abs(fuel_kg - 907.0) < 5.0) and 1 or 0
+
+	-- Update live digit datarefs
+	local c = math.floor(cargo_kg + 0.5)
+	sf50DR_cargo_d1 = (c >= 100) and (math.floor(c / 100) % 10) or -1
+	sf50DR_cargo_d2 = (c >= 10) and (math.floor(c / 10) % 10) or -1
+	sf50DR_cargo_d3 = c % 10
+
+	local f = math.floor(fuel_kg + 0.5)
+	sf50DR_fuel_d1  = math.floor(f / 100) % 10
+	sf50DR_fuel_d2  = math.floor(f / 10) % 10
+	sf50DR_fuel_d3  = f % 10
+
+	local p = math.floor(payload_kg + 0.5)
+	sf50DR_pay_d1   = (p >= 100) and (math.floor(p / 100) % 10) or -1
+	sf50DR_pay_d2   = math.floor(p / 10) % 10
+	sf50DR_pay_d3   = p % 10
+
+	local t = math.floor(gross_kg + 0.5)
+	sf50DR_tow_d1   = math.floor(t / 1000) % 10
+	sf50DR_tow_d2   = math.floor(t / 100) % 10
+	sf50DR_tow_d3   = math.floor(t / 10) % 10
+	sf50DR_tow_d4   = t % 10
 
 	if simDR_slider2 ~= nil then
 		simDR_slider2 = cargo_kg
