@@ -136,8 +136,11 @@ local function get_simbrief_user()
 		if f then
 			local line = f:read("*l")
 			f:close()
-			if line and line:match("%w+") then
-				return line:match("^%s*(.-)%s*$")
+			if line then
+				local clean = line:match("%w+")
+				if clean and #clean > 0 then
+					return clean
+				end
 			end
 		end
 	end
@@ -220,33 +223,68 @@ end
 
 local function sync_simbrief_live()
 	local user = get_simbrief_user()
-	local cmd = 'curl -s -m 5 "https://www.simbrief.com/api/xml.fetcher.php?userid=' .. tostring(user) .. '&json=1"'
+	local is_num = tostring(user):match("^%d+$")
+	local param = is_num and "userid=" or "username="
+	local url = "https://www.simbrief.com/api/xml.fetcher.php?" .. param .. tostring(user) .. "&json=1"
+
+	local dbg = io.open("/tmp/sf50_simbrief_debug.log", "a")
+	if dbg then
+		dbg:write("\n[" .. os.date("%Y-%m-%d %H:%M:%S") .. "] Sync requested for user: " .. tostring(user) .. " URL: " .. url .. "\n")
+	end
+
+	-- Run curl with insecure SSL, follow redirects, timeout 8s
+	local cmd = 'curl -k -s -L -m 8 "' .. url .. '" 2>&1'
 	local pipe = io.popen(cmd)
+	local content = nil
 	if pipe then
-		local content = pipe:read("*a")
+		content = pipe:read("*a")
 		pipe:close()
-		if content and #content > 100 then
-			local p, c, f, orig, dest, flt = parse_simbrief_raw(content)
-			if p and c and f then
-				save_simbrief_json(p, c, f, orig, dest, flt)
-				return p, c, f
-			end
+	end
+
+	if dbg then
+		dbg:write("Curl response bytes: " .. tostring(content and #content or 0) .. "\n")
+		if content and #content < 200 then
+			dbg:write("Short response: " .. tostring(content) .. "\n")
 		end
+	end
+
+	if content and #content > 100 then
+		local p, c, f, orig, dest, flt = parse_simbrief_raw(content)
+		if p and c and f then
+			save_simbrief_json(p, c, f, orig, dest, flt)
+			if dbg then
+				dbg:write(string.format("Parsed OK: Pax=%d Cargo=%.1f Fuel=%.1f %s->%s Flight=%s\n", p, c, f, orig or "?", dest or "?", flt or "?"))
+				dbg:close()
+			end
+			return p, c, f
+		end
+	end
+
+	if dbg then
+		dbg:write("Live fetch failed or incomplete. Falling back to local file.\n")
 	end
 
 	local paths = get_aircraft_dir_paths("sf50_simbrief.json")
 	for _, path in ipairs(paths) do
 		local file = io.open(path, "r")
 		if file then
-			local content = file:read("*a")
+			local local_content = file:read("*a")
 			file:close()
-			local p, c, f = parse_simbrief_raw(content)
+			local p, c, f = parse_simbrief_raw(local_content)
 			if p and c and f then
+				if dbg then
+					dbg:write("Loaded from local file: " .. path .. "\n")
+					dbg:close()
+				end
 				return p, c, f
 			end
 		end
 	end
 
+	if dbg then
+		dbg:write("Fallback to hardcoded defaults.\n")
+		dbg:close()
+	end
 	return 2, 25.0, 429.0
 end
 
