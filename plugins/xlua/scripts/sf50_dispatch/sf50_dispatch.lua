@@ -232,8 +232,8 @@ local function sync_simbrief_live()
 		dbg:write("\n[" .. os.date("%Y-%m-%d %H:%M:%S") .. "] Sync requested for user: " .. tostring(user) .. " URL: " .. url .. "\n")
 	end
 
-	-- Run curl with insecure SSL, follow redirects, timeout 8s
-	local cmd = 'curl -k -s -L -m 8 "' .. url .. '" 2>&1'
+	-- Run curl with clean LD_LIBRARY_PATH (bypasses Steam Linux Runtime library conflict)
+	local cmd = 'LD_LIBRARY_PATH="" curl -k -s -L -m 8 "' .. url .. '" 2>/dev/null || curl -k -s -L -m 8 "' .. url .. '" 2>/dev/null'
 	local pipe = io.popen(cmd)
 	local content = nil
 	if pipe then
@@ -248,7 +248,7 @@ local function sync_simbrief_live()
 		end
 	end
 
-	if content and #content > 100 then
+	if content and #content > 200 and (content:find('"params"') or content:find('"weights"')) then
 		local p, c, f, orig, dest, flt = parse_simbrief_raw(content)
 		if p and c and f then
 			save_simbrief_json(p, c, f, orig, dest, flt)
